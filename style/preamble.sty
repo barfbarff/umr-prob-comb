@@ -1,0 +1,158 @@
+% Basic 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{lmodern}
+\usepackage{import}
+
+% Package for language 
+\usepackage[english]{babel}
+
+% Package for improving look of tables 
+\usepackage{booktabs}
+
+% Package for math
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathtools}
+%\usepackage{mathrsfs}
+%\usepackage{bm}
+%\usepackage{systeme}
+
+% Font
+%\usepackage{cmbright}
+%\usepackage{bbm}
+%\usepackage{mlmodern}
+
+\usepackage[scaled=.91]{XCharter}
+
+% Xcolor
+\usepackage[dvipsnames]{xcolor}
+
+% Parskip
+\usepackage{parskip}
+
+% Tikz
+\usepackage{tikz} 
+\usepackage{tikz-cd}
+\usetikzlibrary{intersections, angles, quotes, calc, positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.13}
+
+
+\tikzset{
+    force/.style={thick, {Circle[length=2pt]}-stealth, shorten <=-1pt}
+}
+
+%Tcolorbox
+\usepackage[breakable]{tcolorbox}
+
+% Generate hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    hypertexnames=false,
+    linkcolor=LinkColour,
+    citecolor=CiteColour
+}
+
+% Modify width of text
+\usepackage[a4paper, margin=2cm]{geometry}
+
+
+% Environment for theorem
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\declaretheoremstyle[
+  headfont=\bfseries\color{ForestGreen!70!black}, 
+  bodyfont=\normalfont, 
+  mdframed = {
+    linewidth = 2pt,
+    rightline = false, topline = false, bottomline = false,
+    linecolor = ForestGreen,
+    backgroundcolor = ForestGreen!5
+  }
+]{thmgreenbox}
+    
+\declaretheoremstyle[
+  headfont=\bfseries\color{Periwinkle!70!black}, 
+  bodyfont=\normalfont, 
+  mdframed = {
+    linewidth = 2pt,
+    rightline = false, topline = false, bottomline = false,
+    linecolor = Periwinkle,
+    backgroundcolor = Periwinkle!5
+  }
+]{thmpurplebox}
+
+\declaretheoremstyle[
+  headfont=\bfseries, 
+  bodyfont=\normalfont
+]{thmredbox}
+    
+\declaretheoremstyle[
+  headfont=\bfseries\color{BlueGreen!70!black}, 
+  bodyfont=\normalfont, 
+  mdframed = {
+    linewidth = 2pt,
+    rightline = false, topline = false, bottomline = false,
+    linecolor = BlueGreen,
+    backgroundcolor = BlueGreen!5
+  }
+]{thmbluebox}
+    
+\declaretheoremstyle[
+  headfont=\bfseries, 
+  bodyfont=\normalfont
+]{thmblueline}
+    
+\declaretheoremstyle[
+  headfont=\itshape, 
+  bodyfont=\normalfont, 
+  numbered=no, 
+  qed=\qedsymbol, 
+  postheadspace=\newline 
+]{thmproofbox}
+
+\declaretheoremstyle[
+  headfont=\bfseries\color{black}, 
+  bodyfont=\normalfont, 
+  mdframed = {
+    nobreak = true,
+    linewidth = 1pt,
+    linecolor = black,
+    backgroundcolor = white 
+  }
+]{simplebox}
+
+
+\declaretheorem[style=simplebox, name=Definition]{definition}
+\declaretheorem[style=thmredbox, numbered=no, name=Example]{eg}
+\declaretheorem[style=simplebox, name=Proposition]{prop}
+\declaretheorem[style=simplebox, name=Theorem]{theorem}
+\declaretheorem[style=simplebox, name=Lemma]{lemma}
+\declaretheorem[style=simplebox, name=Corollary]{corollary}
+\declaretheorem[style=simplebox, name=Problem]{problem}
+\declaretheorem[style=thmredbox, name=Exercise]{exercise}
+\declaretheorem[style=thmproofbox, name=Proof]{replacementproof}
+\renewenvironment{proof}[1][\proofname]{\vspace{0pt}\begin{replacementproof}}{\end{replacementproof}\vspace{\parskip}}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+
+\usepackage{etoolbox}
+\AtBeginEnvironment{definition}{\vspace*{1em}}
+\AtBeginEnvironment{lemma}{\vspace*{1em}}
+\AtBeginEnvironment{prop}{\vspace*{1em}}
+\AtBeginEnvironment{theorem}{\vspace*{1em}}
+\AtBeginEnvironment{corollary}{\vspace*{1em}}
+
+\newcommand{\DeclareAutoPairedDelimiter}[3]{%
+  \expandafter\DeclarePairedDelimiter\csname Auto\string#1\endcsname{#2}{#3}%
+  \begingroup\edef\x{\endgroup
+    \noexpand\DeclareRobustCommand{\noexpand#1}{%
+      \expandafter\noexpand\csname Auto\string#1\endcsname*}}%
+  \x}

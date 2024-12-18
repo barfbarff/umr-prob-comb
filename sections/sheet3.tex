@@ -1,0 +1,109 @@
+\begin{problem}
+  There are 799 teams in a tournament. Here every team plays against every other team exactly once and every match is decisive, i.e. there are no ties. Show that there are 2 distinct sets $A$ and $B$ of $7$ teams each, such that every team of $A$ has won against every team of $B$.
+\end{problem}
+\begin{proof}
+  This problem can be modelled by a tournament $G=(V,E)$ where a vertex $v \in V$ presents a unique team and an edge $e=(u,v) \in E$, where $u,v \in V$, presents the event where the team presented by the vertex $u$ has won the team presented by the vertex $v$. That is, the original problem turns into the problem of showing that there exist two distinct sets of vertices in $G$, which are named $A$ and $B$, such that for every vertex in $A$, the vertex must have an outgoing edge to every vertex in $B$. 
+
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of choices of $7$ vertices from $G$ for set $A$ and the probability measure $\mathbb{P}(w) = 1 / \binom{799}{7}$ for any $w \in \Omega$. Let $X: \Omega \to \mathbb{R}$ be the random variable that assigns to $ w \in \Omega$ number of vertices in $G$ having an incoming edge from each vertex in $\omega$. For any vertex $v$ in $G$, we define the random variable $X_{v}: \Omega \to \mathbb{R}$ defined by the following rule for any $\omega \in \Omega$
+  \begin{align*}
+    X_{v}(w) = 
+    \begin{cases}
+      1 \text{ if $v$ has an incoming edge from each vertex in $w$} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  Next, we define the indicator random variable $X_{v} = 1_{A_{v}}$ of event
+  \begin{align*}
+    A_{v} = \{w \in \Omega \ | \ v  \text{ has an incoming edge from each vertex in $w$}\} 
+  \end{align*}
+  then $\mathbb{E}(X_{v}) = \mathbb{E}(1_{A_{v}}) = \mathbb{P}(A_{v})$. For each vertex $v \in V$, it is obvious that $|A_{v}| = \binom{deg^{-}v}{7}$. And thus
+  \begin{align*}
+    \mathbb{P}(A_{v}) = \binom{deg^{-}v}{7} / \binom{799}{7}
+  \end{align*}
+  Note that $X = \sum_{v \in V} X_{v}$. By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(X) = \sum_{v \in V} \mathbb{E}(X_{v}) = \sum_{v \in V} \mathbb{P}(A_{v}) = (\sum_{v \in V} \binom{deg^{-}v}{7}) / \binom{799}{7} \tag{1.1}
+  \end{align*}
+  It is worth to note that, when $deg^{-}v < 7$ for any $v \in V$, then $\binom{deg^{-}v}{7}=0$. That is, only the vertices $v \in V$ having $deg^{-}v \geq 7$ are important to the sum $\sum_{v \in V} \binom{deg^{-}v}{7}$. For any vertex $v \in V$ such that $deg^{-}v \geq 7$, let
+  \begin{align*}
+    f(deg^{-}v) = \binom{deg^{-}v}{7}
+  \end{align*}
+  It is known that $\binom{a}{b}$ is a convex function for $a \geq b$, thus $f(deg^{-}v)$ is a convex function. Therefore, by Jensen's inequality, we have
+  \begin{align*}
+    &\ f(\frac{1}{|V|} \sum_{v \in V} deg^{-}v) \leq \frac{1}{|V|} \sum_{v \in V} f(deg^{-}v) \\
+    &\Leftrightarrow |V| f(\frac{1}{|V|} \sum_{v \in V} deg^{-}v) \leq \sum_{v \in V} f(deg^{-}v) \tag{1.2}
+  \end{align*}
+  It is known that $\sum_{v \in V} deg^{-}v$ is equal to number of edges in $G$, thus $\sum_{v \in V} deg^{-}v = \binom{799}{2}$ since $G$ is a tournament. Therefore, the inequality $(1.2)$ becomes
+  \begin{align*}
+    &\ \sum_{v \in V} f(deg^{-}v) \geq 799 f \left(\frac{1}{799} \binom{799}{2} \right) \\
+    &\Leftrightarrow \sum_{v \in V} f(deg^{-}v) \geq 799 f(399) \\
+    &\Leftrightarrow \sum_{v \in V} f(deg^{-}v) \geq 799 \binom{399}{7} \tag{1.3}
+  \end{align*}
+  Based on the equation $(1.3)$ and the definition of the function $f(deg^{-}v)$, the equation $(1.1)$ is equivalent to
+  \begin{align*}
+    \mathbb{E}(X) \geq \left(799 \binom{399}{7} \right) / \binom{799}{7} \Leftrightarrow \mathbb{E}(X) \geq 6.02
+  \end{align*}
+  Since $X$ only takes positive integers, the inequality above implies that $\mathbb{P}(X \geq 7) > 0$. Therefore, there must exists a set of 7 vertices in $G$ where each vertex has an incoming edge from each vertex in $A$. Let this set be $B$, it is easy to verify that $B$ must be distinct from $A$ as there are no loops in a tournament, and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  A proper vertex colouring of an undirected graph $G=(V,E)$ with a set of colours $F$ is a map $f: V \to F$, such that for every edge $e \in E$ we have $\# f(e)=1$, i.e. no adjacent vertices are coloured the same way. Let $G=([n],e)$ be a bipartite graph and $F$ a finite set of colours. Let $F_{1}, F_{2}, \ldots, F_{n} \in F$, such that $\# F_{i} \geq \log_{2}(n)$ for $1 \leq i \leq n$. Show that there is a proper vertex colouring of $G$ such that $f(i) \in F_{i}$ for every $1 \leq i \leq n$.
+\end{problem}
+\begin{proof}
+  Since $G$ is bipartite, then its vertices can be partitioned into two disjoint sets, which are named $A$ and $B$, such that the edges in the graph connect a vertex in $A$ to a vertex in $B$ or vice-versa. That is, if we divide the set of colours $F$ into two disjoint sets $F_{A}$ and $F_{B}$, and only use colours $F_{A}$ and $F_{B}$ to colour vertices in $A$ and $B$ respectively, then such colouring must be a proper colouring. Additionally, we want to ensure that $f_{i} \in F_{i}$ for every $1 \leq i \leq n$ when we colour $G$ in this way. That is, for any partition of $F$ into $F_{A}$ and $F_{B}$, we define a vertex numbered $i$ in $A$ or $B$ is said to be colourable only when $F_{i} \cap F_{A} \neq \emptyset$ or $F_{i} \cap F_{B} \neq \emptyset$, respectively. Therefore, the original problem turns into the problem of showing that there exists a way to partition the set $F$ into two disjoint sets $F_{A}$ and $F_{B}$ such that all vertices in $G$ are colourable.
+
+  Firstly, we define the discrete probability space $(\Omega, \mathbb{P})$ where the sample space $\Omega$ is the set of all possible partitions of $F$ into two disjoint sets $F_{A}$ and $F_{B}$, and the probability measure $\mathbb{P}(w) = (\frac{1}{2})^{|F|}$ for any $\omega \in \Omega$. Fixed a vertex $v \in V$, let 
+  \begin{align*}
+    \Omega_{v} = \{\omega \in \Omega \ | \ \text{ $v$ is not colourable}\}
+  \end{align*}
+  To be more specific, $\Omega_{v}$ is the set of partitions of $F$ into two disjoint sets $F_{A}$ and $F_{B}$ where all colours in $F_{v}$ are distributed to the wrong set. Consider any colour in $F_{v}$, the probability of the colour to be distributed to the wrong set is $\frac{1}{2}$, as there are only two sets: $F_{A}$ and $F_{B}$. Additionally, there are at least $\log_{2}(n)$ colours in $F_{v}$. Therefore,
+  \begin{align*}
+    \mathbb{P}(\Omega_{v}) \leq \left( \frac{1}{2} \right)^{\log_{2}(n)} = \frac{1}{n}   
+  \end{align*}
+  Furthermore, we have
+  \begin{align*}
+    \mathbb{P}(\bigcup_{v \in V} \Omega_{v}) &\leq \sum_{v \in V} \mathbb{P}(\Omega_{v}) \\
+    \Leftrightarrow \mathbb{P}(\bigcup_{v \in V} \Omega_{v}) &\leq n \frac{1}{n} \\
+    \Leftrightarrow \mathbb{P}(\bigcup_{v \in V} \Omega_{v}) &\leq 1 \tag{2.1}
+  \end{align*}
+  Moreover, the equal sign in the inequality $(2.1)$ only happens when $\Omega_{u} \cap \Omega_{v} = \emptyset$ for any distinct vertices $u,v \in V$. This implies that, for any partition of $F$ into two disjoint sets $F_{A}$ and $F_{B}$ such that a vertex $u \in V$ is non-colourable, then other vertices in $V$ that are not $u$ must be colourable. It is easy to verify that this is impossible. Hence, it is impossible for the equal sign in the inequality $(2.1)$ to happen, thus 
+  \begin{align*}
+    \mathbb{P}(\bigcup_{v \in V} \Omega_{v}) < 1
+  \end{align*}
+  This inequality implies that not every partition of $F$ into two disjoint sets $F_{A}$ and $F_{B}$ that contain at least one vertex in $G$ that is non-colourable. Therefore, there must exist a partition of $F$ into two disjoint sets $F_{A}$ and $F_{B}$ where every vertex in $G$ is colourable, and thus there exists a proper vertex colouring of $G$ such that $f(i) \in F_{i}$ for every $1 \leq i \leq n$ due to the logic presented at the beginning of the proof.
+\end{proof}
+
+\begin{problem}
+  There is a chess tournament with $40$ players. There are $80$ matches played and no two players play against each other more than once. Show that there are at least $5$ players, where no two of them play against each other.
+\end{problem}
+\begin{proof}
+  The chess tournament can be modelled by an undirected graph $G=(V,E)$ where a vertex presents a unique player while an edge between two vertices presents a match between two players. Therefore, $|V|=40$ and $|E|=80$ and the original problem turns into the problem of showing that the graph $G$ has an independent set of size $5$ at least.
+
+  Recall the Theorem $4.1$ in the lecture that the maximum cardinality of an independent set in $G$ is 
+  \begin{align*}
+    \alpha(G) \geq \frac{n}{2d} 
+  \end{align*}
+  where $|V|=n$ and $|E| = \lfloor \frac{nd}{2} \rfloor$. In this case, we have $d=4$, and thus $\alpha(G) \geq 5$ based on the Theorem $4.1$, and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Let $(a_{n})_{n \in \mathbb{N}}$ and $(b_{n})_{n \in \mathbb{N}}$ be sequences of real numbers. Decide which of the following statements is always true , which might occur and which can't be true. Give a corresponding proof (for "is always true" or "can't be true") or examples (one example for "holds" and for "doesn't hold" for each "might occur").
+  \begin{enumerate}[label=(\roman*)]
+    \item $a_{n} = O(a_{n}^{2})$
+    \item $a_{n} \neq O_{b_{n}}$ and $b_{n} \neq O(a_{n})$
+    \item $a_{n} = O(b_{n})$ and $b_{n} = o(a_{n})$
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  We are going to solve the problems one after another
+  \begin{enumerate}[label=(\roman*)]
+    \item This case might occur. When $a_{n}=n$ for $n \geq 1$ then $a_{n}=O(a_{n}^{2})$. To be more specific, we have
+    \begin{align*}
+      \limsup_{n \to \infty} \frac{|a_{n}|}{|a_{n}^{2}|} = \limsup_{n \to \infty} \frac{1}{|a_{n}|} = \limsup_{n \to \infty} \frac{1}{|n|} = 0
+    \end{align*}
+    On the other hand, when $a_{n}=\frac{1}{n}$ for $n \geq 1$ then $a_{n} \neq O(a_{n}^{2})$. This is because
+    \begin{align*}
+      \limsup_{n \to \infty} \frac{|a_{n}|}{|a_{n}^{2}|} = \limsup_{n \to \infty} \frac{1}{|a_{n}|} = \limsup_{n \to \infty} |n| = \infty
+    \end{align*}
+  \end{enumerate}
+\end{proof}

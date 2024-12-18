@@ -1,0 +1,104 @@
+\begin{problem}
+  Formulate and proof analogs of the FKG Inequality for the cases, where
+  \begin{itemize}
+    \item $f$ is monotonically decreasing and $g$ monotonically increasing.
+    \item $f$ and $g$ are both monotonically decreasing.
+  \end{itemize}
+\end{problem}
+\begin{proof}
+  By applying the FKG Inequality to the case where $f$ is monotonically decreasing and $g$ is monotonically increasing, then the following inequality holds
+  \begin{align*}
+    \sum\limits_{x \in L}f(x)\mu(x) \sum\limits_{x \in L}g(x)\mu(x) &\geq \sum\limits_{x \in L}f(x)g(x)\mu(x) \sum\limits_{x \in L} \mu(x)
+  \end{align*}
+  and the following inequality holds by applying the FKG Inequality to the case where $f$ and $g$ both monotonically decreasing
+  \begin{align*}
+    \sum\limits_{x \in L}f(x)\mu(x) \sum\limits_{x \in L}g(x)\mu(x) &\leq \sum\limits_{x \in L}f(x)g(x)\mu(x) \sum\limits_{x \in L} \mu(x)
+  \end{align*}
+  These two statements can be proved as follows.
+
+  In order to apply the FKG Inequality, suppose that $L$ is a countable distributive lattice, $f,g: L \to \mathbb{R}$, and $\mu : L \to \mathbb{R}$ is log-supermodular, such that the following functions exist
+  \begin{align*}
+    \sum\limits_{x \in L}\mu(x), \sum\limits_{x \in L}f(x)\mu(x), \sum\limits_{x \in L}g(x)\mu(x), \text{ and } \sum\limits_{x \in L}f(x)g(x)\mu(x)
+  \end{align*}
+  The FKG Inequality only applies to $f,g$ that are monotonically increasing. Therefore, we want to apply the FKG Inequality to $-f$ and $g$ when $f$ is monotonically decreasing and $g$ is monotonically increasing, this is because $-f$ is monotonically increasing. In this case, by the FKG Inequality, we have
+  \begin{align*}
+    \sum\limits_{x \in L} \Big(-f(x)\Big)\mu(x) \sum\limits_{x \in L}g(x)\mu(x) &\leq \sum\limits_{x \in L} \Big(-f(x)\Big)g(x)\mu(x) \sum\limits_{x \in L} \mu(x) \\
+    \Leftrightarrow \sum\limits_{x \in L}f(x)\mu(x) \sum\limits_{x \in L}g(x)\mu(x) &\geq \sum\limits_{x \in L}f(x)g(x)\mu(x) \sum\limits_{x \in L} \mu(x)
+  \end{align*}
+  Similarly, we want to apply the FKG Inequality to $-f$ and $-g$ when $f$ and $g$ are both monotonically decreasing, as $-f$ and $-g$ are monotonically increasing. In this case, by the FKG inequality, we have
+  \begin{align*}
+    \sum\limits_{x \in L} \Big(-f(x)\Big)\mu(x) \sum\limits_{x \in L} \Big(-g(x)\Big)\mu(x) &\leq \sum\limits_{x \in L} \Big(-f(x) \Big) \Big( -g(x) \Big) \mu(x) \sum\limits_{x \in L} \mu(x) \\
+    \Leftrightarrow \sum\limits_{x \in L}f(x)\mu(x) \sum\limits_{x \in L}g(x)\mu(x) &\leq \sum\limits_{x \in L}f(x)g(x)\mu(x) \sum\limits_{x \in L} \mu(x)
+  \end{align*}
+  , and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Follow from the FKG Inequality, that for real numbers $0 \leq a_{1} \leq \ldots \leq a_{n}$ and $0 \leq b_{1} \leq \cdots \leq b_{n}$ it holds, that
+  \begin{align*}
+    \langle a,b \rangle \geq \frac{\langle a,\textbf{1} \rangle \cdot \langle \textbf{1},b \rangle}{n}
+  \end{align*}
+  where $\textbf{1} \in \mathbb{R}^{n}$ is the constant 1-vector and $a$ and $b$ are the vectors with ordered entries $a_{i}$ resp. $b_{i}$. $\langle .,. \rangle$ is the standard dot product.
+\end{problem}
+\begin{proof}
+  Let $S = \{(a_{1},b_{1}), (a_{2},b_{2}), \ldots, (a_{n},b_{n})\}$ where the binary relation $\leq$ on $S$ is defined as $(a_{i},b_{i}) \leq (a_{j},b_{j})$ when $a_{i} \leq a_{j}$ and $b_{i} \leq b_{j}$. It follows from the Problem $2$ in Sheet $9$ that $S$ is a distributive lattice. Next, we define the following functions for any $s_{i} = (a_{i}, b_{i}) \in S$
+  \begin{align*}
+    f(s_{i}) = a_{i}, g(s_{i}) = b_{i}, \text{ and } \mu(s_{i}) = 1
+  \end{align*}
+  By the definition of the binary relation $\leq$ on the distributive lattice $S$, for $i < j$, we have $f(s_{i}) = a_{i} \leq a_{j} = f(s_{j})$, and $g(s_{i}) = b_{i} \leq b_{j} = f(s_{j})$. Therefore, the two functions $f,g$ are monotonically increasing. Since $\mu(s_{i})=1$, then it is obvious that $\mu(x)\mu(y) \leq \mu(x \vee y) \mu(x \wedge y)$ for any $x,y \in S$, and thus $\mu$ is log-supermodular. Moreover, as $S$ is a countable distributive lattice, then the following functions exist
+  \begin{align*}
+    \sum\limits_{s \in S}f(s)\mu(s), \sum\limits_{s \in S}g(s)\mu(s), \sum\limits_{s \in S} f(s)g(s)\mu(s), \text{ and }\sum\limits_{s \in S} \mu(s)
+  \end{align*}
+  By the FKG Inequality, we have
+  \begin{align*}
+    \sum\limits_{s \in S}f(s)\mu(s) \sum\limits_{s \in S}g(s)\mu(s) &\leq \sum\limits_{s \in S} f(s)g(s)\mu(s) \sum\limits_{s \in S} \mu(s) \\
+    \Leftrightarrow \sum\limits_{i=1}^{n} a_{i} \sum\limits_{i=1}^{n} b_{i} &\leq n \sum\limits_{i=1}^{n} a_{i}b_{i} \tag{2.1}
+  \end{align*}
+  Moreover, as $\langle a,b \rangle = \sum\limits_{i=1}^{n} a_{i}b_{i}$, $\langle a,\textbf{1} \rangle = \sum\limits_{i=1}^{n} a_{i}$, and $\langle \textbf{1},b \rangle = \sum\limits_{i=1}^{n} b_{i}$, the equality $(2.1)$ is equivalent to
+  \begin{align*}
+    \langle a,\textbf{1} \rangle \cdot \langle \textbf{1},b \rangle &\leq n \langle a,b \rangle \\
+    \Leftrightarrow \frac{\langle a,\textbf{1} \rangle \cdot \langle \textbf{1},b \rangle}{n} &\leq \langle a,b \rangle
+  \end{align*}
+  , and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Let $p \in [0,1]$. From the set $[n]$ there will be chosen a subset $A$ randomly, by choosing independently with probability $p$ for each $i \in [n]$ whether $i$ is taken into $A$.
+
+   From $A$ there will be constructed $B \subseteq A$, by removing every $i$ with $\{i,i+1\} \subseteq A$.
+
+   Determine the expected value of the cardinality of $B$ and determine $p$ such that
+   \begin{align*}
+     \lim_{n \to \infty} | \mathbb{E}[\#B] - \frac{n}{4} | = 0
+   \end{align*}
+\end{problem}
+\begin{proof}
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega = 2^{[n]}$ and the probability measure $\mathbb{P}(\omega) = p^{|\omega|}(1-p)^{|n| - |\omega|}$ for any $\omega \in \Omega$. Let $X : \Omega \to \mathbb{N}$ be the random variable that assigns to any $\omega \in \Omega$ its cardinality, and $Y : \Omega \to \mathbb{N}$ be the random variable that assigns to any $\omega \in \Omega$ the number of elements $i \in [n]$ such that $\{i,i+1\} \subseteq \omega$. That is, for any selection of $A$, which is $\omega \in \Omega$, then $\# B = X - Y$, and thus $\mathbb{\# B} = \mathbb{E}(X-Y)$. By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(\# B) = \mathbb{E}(X) - \mathbb{E}(Y) \tag{3.1}
+  \end{align*}
+  As any subset $A$ is constructed by independently choosing elements from $[n]$ with probability $p$ for each $i \in [n]$, then $X$ has binomial distribution with parameters $n$ and $p$. Therefore, $\mathbb{E}(X) = np$. That is, it remains to find $\mathbb{E}(Y)$ in order to calculate $\mathbb{E}(\# B)$ by the equation $(3.1)$.
+
+  For any $i \in [n-1]$, let $Y_{i} : \Omega \to \{0,1\}$ be the indicator random variable defined by the following rule for any $\omega \in \Omega$
+  \begin{align*}
+    Y_{i}(\omega) = 
+    \begin{cases}
+      1 \text{ if $\{i,i+1\} \subseteq \omega$} \\
+      0 \text{ otherwise }
+    \end{cases}
+  \end{align*}
+  Hence, $Y(\omega) = \sum\limits_{i=1}^{n-1} Y_{i}(\omega)$. For $i \in [n-1]$, let $Y_{i} = 1_{A_{i}}$ be the indicator variable for the event
+  \begin{align*}
+    A_{i} = \{\omega \in \Omega \ | \ \{i,i+1\} \subseteq \omega\} 
+  \end{align*}
+  and thus $\mathbb{E}(Y_{i}) = \mathbb{E}(1_{A_{i}}) = \mathbb{P}(A_{i})$. It is obvious that $\mathbb{P}(A_{i})=p^{2}$. Therefore,
+  \begin{align*}
+    \mathbb{E}(Y) &= \mathbb{E}(\sum\limits_{i=1}^{n-1} Y_{i}) \\
+                  &= \sum\limits_{i=1}^{n-1} \mathbb{E}(Y_{i}) \\
+                  &= (n-1)p^{2}
+  \end{align*}
+  Based on $\mathbb{E}(X)=np$ and $\mathbb{E}(Y) = (n-1)p^{2}$ that are calculated above, the equality $(3.1)$ is equivalent to
+  \begin{align*}
+    \mathbb{E}(\# B) = np - (n-1)p^{2}
+  \end{align*}
+\end{proof}

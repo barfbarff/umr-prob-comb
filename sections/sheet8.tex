@@ -1,0 +1,84 @@
+\begin{problem}
+  Let again $G=([n],E)$ an undirected graph and $F_{1}, \ldots, F_{n} \subseteq F$ a collection of possible colors for every node, i.e. $F$ is a superset of colours and $F_{i}$ is the set of colours allowed for the vertex $i$. Here let $\# F_{i}=8r$ for every $i \in [n], r > 0$. Further for every $c \in F_{i}$, let there be at most $r$ neighbours $j$ of $i$, s.t $c$ is also allowed for $j$, i.e.
+  \begin{align*}
+    \# \{j \in N(i) \ | \ c \in F_{j}\} \leq r.
+  \end{align*}
+  Show: There is an allowed colouring $f$ (i.e. No edge is monochromatic) of $G$, with $f(i) \in F_{i}$.
+\end{problem}
+\begin{proof}
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sampling space $\Omega$ is the set of all possible vertex colourings $f$ of the graph $G$ where $f(i) \in F_{i}$ and $i \in [n]$, and the probability space $\mathbb{P}(\omega) = \left( \frac{1}{8r} \right)^{|E|}$ for any vertex colouring $\omega \in \Omega$. For any edge $e \in E$, and any colour $c \in F$ that is allowed to colour both endpoints of $e$, let $A_{e,c}$ be an event in the probability space $(\Omega, \mathbb{P})$ where the edge $e$ is non-monochromatic, or the two endpoints of the edge $e$ are coloured $c$. For each endpoint of a edge $e$, there are $8r$ colours that we can choose to colour it, then the probability of an endpoint of the edge $e$ to be coloured $c$ is $\frac{1}{8r}$. Moreover, since the vertices in $G$ are coloured independently, we have
+  \begin{align*}
+    \mathbb{P}(A_{e,c}) = \left( \frac{1}{8r} \right)^{2} \tag{1.1}
+  \end{align*}
+  Let $\mathcal{E}$ be the set of all events $A_{e,c}$ where an edge $e \in E$ has endpoints coloured $c \in F$ that is allowed to colour both endpoints of $e$. In order to show that the statement of this problem holds, we want to prove that $\mathbb{P}(\Omega \setminus \mathcal{E}) > 0$. For the dependency graph $D=(\mathcal{E}, \mathcal{F})$, a specific edge $e^{'} \in E$, and a specific colour $c \in F$ that is allowed to colour endpoints of the edge $e^{'}$, it is known from the Summatorial Local Lemma that this inequality automatically holds when 
+  \begin{align*}
+    \sum_{\left( (e,c), (e^{'}, c^{'}) \right) \in \mathcal{F}} \mathbb{P}(A_{e^{'}, c^{'}}) \leq \frac{1}{4} \tag{1.2}
+  \end{align*}
+  Since $\mathbb{P}(A_{e^{'},c^{'}})$ is known by the equation $(1.1)$, we now want to find the number of incoming edges that the event $A_{e^{'}, c^{'}}$ has in the dependency graph $D$. This can be done by finding the number of events in $\mathcal{E}$ on which the event $A_{e^{'},c^{'}}$ is dependent. Let $e^{'}=(i^{'},j^{'})$ and $e=(i,j)$, it is obvious that the event $A_{e^{'},c^{'}}$ is mutually independent from the events $A_{e,c}$ where $i^{'}=i$ and $j^{'}=j$. That is, it remains to analyse the dependencies of the event $A_{e^{'},c^{'}}$ on the events $A_{e,c}$ where either $i^{'}=i$ or $j^{'}=j$. When $i^{'}=i$, it is obvious that the event $A_{e^{'},c^{'}}$ is dependent on the events $A_{e,c}$. That is, there must be an outgoing edge to the event $A_{e^{'},c^{'}}$ from each of these events in the dependency graph $D$, and thus the number of such edges is equal to the number of events $A_{e,c}$ when $i^{'}=i$. It is worth to note that the two endpoints of $e$ in this case, which are $i^{'}$ and $j$, are coloured $c \in F_{i^{'}} \cap F_{j} \neq \emptyset$. For each colour $c \in F_{i^{'}}$, there are at most $r$ neighbours $j$ that $c \in F_{j}$, and thus there are at most $r$ events $A_{e,c}$ for a specific colour $c \in F_{i^{'}}$. Moreover, since there are $8r$ colours in $F_{i^{'}}$, then the number of events $A_{e,c}$ in $\mathcal{E}$ when $i^{'}=i$ is at most $8r \times r = 8r^{2}$ in total. The same result can be obtained for the case where $j^{'}=j$ for similar reason. Therefore, the number of incoming edges that the event $A_{e^{'},c^{'}}$ has in the dependency graph $D$ is at most $16r^{2}$. Therefore, we have
+  \begin{align*}
+    \sum_{\left( (e,c), (e^{'},c^{'}) \right) \in \mathcal{F}} \mathbb{P}(A_{e^{'}, c^{'}}) \leq \frac{16r^{2}}{64r^{2}} = \frac{1}{4}
+  \end{align*}
+  this implies that the equation $(1.2)$ holds, and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  A hypergraph $H=(V,E)$ is a possible generalisation of a graph: Instead of $E \subseteq \binom{V}{2}$ consider a subset $E \subseteq 2^{V}$. We call the elements of $E$ hyperedges.
+
+  An allowed $2$-colouring of a hypergraph $H=(V,E)$ is a map $f : V \to [2]$, s.t. $\#f(e)=2$ for all $e \in E$.
+
+  Let $H=(V,E)$ be a hypergraph, such that every hyperedge $e \in E$ connects at least $k$ nodes (i.e. $\# e \geq k$ for every $e \in E$) and every hyperege $e \in E$ intersects at most $d$ other hyperedges.
+
+  Show: If $e(d+1) \leq 2^{k-1}$, then there is an allowed $2$-colouring of $H$.
+\end{problem}
+\begin{proof}
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of all possible vertex colourings of the graph $G$ using colours in $[2]$, and the probability measure $\mathbb{P}$ is given by independent colourings of vertices of $G$ using colours in $[2]$ that are uniformly distributed. For any hyperedge $e\in E$, let $A_{e}$ be the event in the probability space $(\Omega, \mathbb{P})$ where all vertices in $e$ are coloured the same. For a specific colour $c \in [2]$, the probability that all vertices in $e$ are coloured $c$ is $\frac{1}{2^{|e|}}$, as there are $2$ choices to colour a vertex in $G$ and the colourings are independent. Therefore,
+\begin{align*}
+  \mathbb{P}(A_{e}) = \frac{2}{2^{|e|}} \overset{|e| \geq k}{\leq} \frac{2}{2^{k}} = \frac{1}{2^{k-1}}
+\end{align*}
+Let $\mathcal{E}$ be the set of all events $A_{e}$ in the probability space $(\Omega, \mathbb{P})$ for any hyperedge $e \in E$. In order to show that the statement of the problem holds, we want to prove $\mathbb{P}(\Omega \setminus \mathcal{E}) > 0$. By the Symmetric Local Lemma, this inequality automatically holds when $ep(u+1) \leq 1$ where $p$ is the probability of any event in $\mathcal{E}$, and $u$ is the upperbound on the number of events in $\mathcal{E}$ that any single event in $\mathcal{E}$ is dependent on. Consider a specific hyperedge $e \in E$, it is obvious that the event $A_{e}$ is independent from the events $A_{e^{'}} \in \mathcal{E}$ where the hyperedges $e,e^{'}$ do not intersect each other. Otherwise, the event $A_{e}$ must be dependent on the events $A_{e^{'}} \in \mathcal{E}$. Since the hyperedge $e$ intersects with at most $d$ hyperedges in $G$, then the maximum number of events $A_{e^{'}} \in \mathcal{E}$, where $e$ and $e^{'}$ intersect each other, that $A_{e}$ is dependent on is $d$. We now want to verify whether the Symmetric Local Lemma holds, we have
+\begin{align*}
+  ep(u+1) = e\mathbb{P}(A_{e})(d+1) &= \frac{e}{2^{k-1}}(d+1)
+\end{align*}
+Since $e(d+1) \leq 2^{k-1}$, then $\frac{e}{2^{k-1}}(d+1) \leq 1$. Therefore, the Symmetric Local Lemma holds, and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Let $G=(V,E)$ with $E \subseteq V \times V$ a directed graph. Let
+  \begin{align*}
+    \delta(G) = \min\limits_{v \in V} \# \{w \in V \ | \ (v,w) \in E\} 
+  \end{align*}
+  the minimal out-degree of $G$ and
+  \begin{align*}
+    \Delta(G) = \max\limits_{v \in V} \# \{w \in V \ | \ (w,v) \in E\}
+  \end{align*}
+  the maximal in-degree of $G$.
+
+  Show: If there is a $k>1$, s.t $e \cdot (\Delta(G) \cdot \delta(G) + 1)(1-1/k)^{\delta(G)} < 1$, then there is a $i \geq 1$, such that $G$ contains a simple cycle of length $ik$.
+
+  A simple cycle of length $\ell$ in a graph is a sequence $e_{1}, \ldots, e_{\ell}$ of edges, such that $e_{i} = (v_{i}, v_{i+1})$, $1 \leq i \leq \ell-1$ and $e_{\ell} = (v_{\ell},v_{1})$ and the vertices $v_{1},\ldots, v_{\ell}$ are pairwise distinct.
+\end{problem}
+\begin{proof}
+  Since $e \cdot (\Delta(G) \cdot \delta(G) + 1)(1-1/k)^{\delta)G} < 1$, then $\delta(G) > 0$. Otherwise, the inequality is equivalent to $e < 1$, which is not true. As $\delta(G) > 0$, then the graph $G$ must contain a simple cycle, this can be proved as follows. Consider the longest path $P = v_{1},\ldots, v_{\ell}$ in the graph $G$. Since $\delta(G) > 0$, then $v_{\ell}$ must have an outgoing edge to another vertex in $G$ as loops are not allowed in $G$. In case that $v_{\ell}$ has an outgoing edge to any vertex in $G$ that is not in $P$, then there exists a path in $G$ that is longer than $P$. However, this contradicts the fact that $P$ is the longest path in $G$. Therefore, $v_{\ell}$ must have an outgoing edge to a vertex $v_{i}$ in the path $P$ where $1 \leq i \leq \ell - 1$, and thus the path $v_{i}, \ldots, v_{\ell}$ is a simple cycle in $G$.
+
+  Next, we want to determine whether $G$ contains a simple cycle of length $ik$. In order to do this, we want to check all possible vertex colourings of $G$ using colours in $[k]$ whether there exists a colouring such that out-neighbours of a vertex $v$ is coloured $(c(v)+1) \Mod{k}$ where $c(v)$ is the colour of $v$. It is easy to verify that such a colouring exists when the graph $G$ contains a simple cycle of length $ik$, and no vertex colouring of $G$ satisfies this condition otherwise.
+
+  Instead of checking all vertex colourings of $G$, we want to do this in an arbitrary subgraph $G^{'}$ of $G$ where each vertex in $G^{'}$ has exactly $\delta(G)$ outgoing edges. It is obvious that if $G^{'}$ contains a simple cycle of length $ik$, then $G$ must also contain it. Based on this idea, let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of all possible vertex colourings of the graph $G^{'}$ using the colours in $[k]$, which can be perceived as the set of all possible functions $f : V \to [k]$, and the probability measure $\mathbb{P}$ is given by independent colourings of vertices using colours in $[k]$ that are uniformly distributed.
+
+  For any vertex $v \in V$, let $A_{v}$ be an event in the probability space $(\Omega, \mathbb{P})$ where all out-neighbours of $v$, which is denoted by $N^{+}(v)$, are not coloured by $(f(v)+1) \Mod{k}$. For a specific vertex $v \in V$, the probability to not be coloured by a specific colour in $[k]$ is $(1 - 1/k)$. Moreover, as $v$ has $\delta(G)$ out-neighbours, then 
+  \begin{align*}
+    \mathbb{P}(A_{v}) = (1-\frac{1}{k})^{\delta(G)}
+  \end{align*}
+
+  Let $\mathcal{E}$ be the set of all events $A_{v}$ in the probability space $(\Omega, \mathbb{P})$ for any vertex $v \in V$. In order to show that the statement of the problem holds, we want to prove $\mathbb{P}(\Omega \setminus \mathcal{E}) > 0$. By the Symmetric Local Lemma, this inequality automatically holds when $ep(d+1) \leq 1$ where $p$ is the probability of any event in $\mathcal{E}$, and $d$ is the upperbound on the number of events in $\mathcal{E}$ that any single event in $\mathcal{E}$ is dependent on. 
+
+  It is obvious that $A_{v}$ is independent from $A_{w}$, where $v \neq w$, in case of $N^{+}(v) \cap \left( N^{+}(w) \cup w \right) = \emptyset$ since $A_{w}$ only affects colouring of vertices which are not in $N^{+}(v)$, and thus the event $A^{w}$ does not affect $\mathbb{P}(A_{v})$. Otherwise, $A_{v}$ must be dependent on $A_{w}$ when $N^{+}(v) \cap \left( N^{+}(w) \cup w \right) \neq \emptyset$. That is, in order to determine the number of events $A_{w}$ in $\mathcal{E}$ that any single vertex $v \in V$ is dependent on, for $v \neq w$, we consider the following cases:
+  \begin{itemize}
+    \item If $w \in N^{+}(v)$, then there are $\delta(G)$ events $A_{w}$ in this case, as the vertex $v$ has $\delta(G)$ out-neighbours.
+    \item Otherwise, $w \in N^{+}(w) \cap N^{+}(v) \neq \emptyset$. It is known that each out-neighbour of the vertex $v$ has at most $\Delta(G)-1$ ingoing edges that are not from $v$. Moreover, the vertex $v$ has $\delta(G)$ out neighbours. Therefore, there are at most $\delta(G) \cdot (\Delta(G)-1)$ events $A_{w}$ in this case.
+  \end{itemize}
+  Therefore, there are at most $\delta(G) + \delta(G) \cdot (\Delta(G)-1) = \delta(G) \cdot \Delta(G)$ events $A_{w}$ in $\mathcal{E}$ that any single vertex $v \in V$ that is dependent on. We now want to verify whether the Symmetric Local Lemma holds, we have
+  \begin{align*}
+    ep(d+1) &= e \cdot (\Delta(G) \cdot \delta(G) + 1)(1-1/k)^{\delta(G)}
+  \end{align*}
+  Since $e \cdot (\Delta(G) \cdot \delta(G) + 1)(1-1/k)^{\delta(G)} < 1$, then the Symmetric Local Lemma holds, and the proof is finished.
+\end{proof}

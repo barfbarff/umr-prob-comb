@@ -1,0 +1,174 @@
+\begin{problem}
+  Let $L$ be a finite distributive lattice, $\mu_{1}, \mu_{2} : L \to \mathbb{R}$ functions satisfying
+  \begin{align*}
+    \begin{gathered}
+      \mu_{1}(x) \mu_{2}(x) \geq 0 \; \text{ for } x \in L \\
+      \mu_{1}(x) \mu_{2}(y) \leq \mu_{1}(x \vee y) \mu_{2}(x \wedge y) \; \text{ for } x,y \in L
+    \end{gathered}
+  \end{align*}
+  and
+  \begin{align*}
+    \sum\limits_{x \in L} \mu_{1}(x) = \sum\limits_{x \in L} \mu_{2}(x).
+  \end{align*}
+  Show that for any monotonically increasing function $f : L \to \mathbb{R}$ it holds that
+  \begin{align*}
+    \sum_{x \in L} f(x) \mu_{1}(x) \geq \sum_{x \in L} f(x)  \mu_{2}(x).
+  \end{align*}
+\end{problem}
+\begin{proof}
+  Let $a = -\min \{f(x) | x \in L\}$. Define the new function $f^{'}(x)=f(x)+a$, it is obvious that $f^{'}(x) \geq 0$ for all $x \in L$. Next, we define the following four functions
+  \begin{align*}
+    \alpha = \mu_{1} \qquad \beta = f^{'} \cdot \mu_{2} \qquad \gamma = f^{'} \cdot \mu_{1} \qquad \delta = \mu_{2}
+  \end{align*}
+  Based on this definition, for $x,y \in L$, we have
+  \begin{align*}
+    \alpha(x) \beta(y) &= \mu_{1}(x) f^{'}(y) \mu_{2}(y)
+  \end{align*}
+  Since $\mu_{1}(x) \mu_{2}(y) \leq \mu_{1}(x \vee y) \mu_{2}(x \wedge y)$ for $x,y \in L$, then the equation is equivalent to
+  \begin{align*}
+    \alpha(x) \beta(y) &\leq f^{'}(y) \mu_{1}(x \vee y) \mu_{2}(x \wedge y) \\
+                       &\leq f^{'}(x \vee y) \mu_{1}(x \vee y) \mu_{2}(x \wedge y) \\
+                       &= \gamma(x \vee y) \delta(x \wedge y)
+  \end{align*}
+  Therefore, the four functions defined above satisfy the Four Functions Theorem, and thus $\alpha(A) \beta(B) \leq \gamma(A \vee B) \delta(A \wedge B)$ for any $A,B \subseteq L$. Hence, for $A = B = L$, we have
+  \begin{align*}
+    \alpha(L) \beta(L)  \leq \gamma(L) \delta(L) \tag{1.1}
+  \end{align*}
+  Since $\alpha(L) = \delta(L)$, as $\sum\limits_{x \in L} \mu_{1}(x) = \sum\limits_{x \in L} \mu_{2}(x)$, then the inequality $(1.1)$ implies that 
+  \begin{align*}
+    && \beta(L) &\leq \gamma(L) \\
+    \Leftrightarrow && \sum\limits_{x \in L} f^{'}(x) \mu_{2}(x) &\leq \sum\limits_{x \in L} f^{'}(x) \mu_{1}(x) \\
+    \Leftrightarrow && \sum\limits_{x \in L} (f(x)+a) \mu_{2}(x) &\leq \sum\limits_{x \in L} (f(x)+a) \mu_{1}(x) \\
+    \Leftrightarrow && \sum\limits_{x \in L} f(x)\mu_{2}(x) + a\sum\limits_{x \in L} \mu_{2}(x) &\leq \sum\limits_{x \in L} f(x)\mu_{1}(x) + a\sum\limits_{x \in L} \mu_{1}(x) \tag{1.2}
+  \end{align*}
+  Since $\sum\limits_{x \in L} \mu_{2}(x) = \sum\limits_{x \in L} \mu_{1}(x)$, then the inequality $(1.2)$ is equivalent to
+  \begin{align*}
+    \sum_{x \in L} f(x) \mu_{1}(x) \geq \sum_{x \in L} f(x)  \mu_{2}(x).
+  \end{align*}
+  , and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Let $L_{n,m} = [n]^{m}$ be the set of all $m$-tuples of elements of $[n]$. Let
+  \begin{align*}
+    (s_{1}, \ldots, s_{m}) \leq (s_{1}^{'}, \ldots, s_{m}^{'})
+  \end{align*}
+  for $(s_{1}, \ldots, s_{m}), (s_{1}^{'}, \ldots, s_{m}^{'}) \in [n]^{m}$, iff $s_{i} \leq s_{i}^{'}$ for all $i$.
+
+  Show:
+  \begin{enumerate}[label=(\roman*)]
+    \item $L_{n,m}$ is a distributive lattice. Describe the $\vee$ and $\wedge$ operations in $L_{n,m}$.
+    \item The subset $S_{n,m} \subseteq L_{n,m}$ of all $(s_{1}, \ldots, s_{m})$ with $s_{1} < \ldots < s_{m}$ equipped with the same order is also a distributive lattice.
+    \item Let now $n \geq m$. There is a bijection $\phi : S_{n,m} \to S_{n, n-m}$, s.t. for all $x,y \in S_{n,m}$, $\phi(y) \leq \phi(x)$ if and only if $x \leq y$.
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (i): In order to show that $L_{n,m}$ is a distributive lattice, we want to show that $L_{n,m}$ satisfies the following properties:
+  \begin{enumerate}[label=(\alph*)]
+    \item The binary relation $(L_{n,m}, \leq)$ is a partial order on $L_{n,m}$. That is, we are going to verify the following conditions       \begin{itemize}
+        \item (Reflexivity) $(s_{1}, \ldots, s_{m}) \leq (s_{1}, \ldots, s_{m})$ for all $(s_{1}, \ldots, s_{m}) \in L_{n,m}$. This is true since $s_{i} \leq s_{i}$ for $1 \leq i \leq m$.
+        \item (Antisymmetry) $(s_{1}, \ldots, s_{m}) \leq (s_{1}^{'}, \ldots, s_{m}^{'})$ and $(s_{1}^{'}, \ldots, s_{m}^{'}) \leq (s_{1}, \ldots, s_{m})$ for \\ $(s_{1}, \ldots, s_{m}), (s_{1}^{'}, \ldots, s_{m}^{'}) \in L_{n,m}$ implies $(s_{1}, \ldots, s_{m}) = (s_{1}^{'}, \ldots, s_{m}^{'})$. This is true since $s_{i} \leq s_{i}^{'}$ and $s_{i}^{'} \leq s_{i}$ for $1 \leq i \leq m$ implies $s_{i} = s_{i}^{'}$.
+        \item (Transitivity) $(s_{1}, \ldots, s_{m}) \leq (s_{1}^{'}, \ldots, s_{m}^{'})$ and $(s_{1}^{'}, \ldots, s_{m}^{'}) \leq (s_{1}^{''}, \ldots, s_{m}^{''})$ for \\ $(s_{1}, \ldots, s_{m}), (s_{1}^{'}, \ldots, s_{m}^{'}), (s_{1}^{''}, \ldots, s_{m}^{''}) \in L_{n,m}$ implies $(s_{1}, \ldots, s_{m}) \leq (s_{1}^{''}, \ldots, s_{m}^{''})$. This is true since $s_{i} \leq s_{i}^{''}$ when $s_{i} \leq s_{i}^{'}$ and $s_{i}^{'} \leq s_{i}^{''}$ for $1 \leq i \leq m$.
+      \end{itemize}
+      Therefore, the binary relation $(L_{n,m}, \leq)$ is a partial order on $L_{n,m}$.
+    \item The partial order $(L_{n,m}, \leq)$ is a lattice. Let $p = (s_{1}, \ldots, s_{m}) \in L_{n,m}$ and $q = (s_{1}^{'}, \ldots, s_{m}^{'}) \in L_{n,m}$, we want to verify the following conditions
+      \begin{itemize}
+        \item The largest element $r = (s_{1}^{''}, \ldots, s_{m}^{''}) \in L_{n,m}$ such that $r \leq p,q$ is unique. It is obvious that $r$ is the largest element in $L_{n,m}$ such that $r \leq p,q$ when $s_{i}^{''} = \min(s_{i}, s_{i}^{'})$, and such $r$ is unique. That is, $p \wedge q = r$, and
+          \begin{align*}
+            p \wedge q = \left( \min(s_{i}, s_{i}^{'}) \right)_{i=1,\ldots,m}
+          \end{align*}
+        \item The smallest element $r = (s_{1}^{''}, \ldots, s_{m}^{''}) \in L_{n,m}$ such that $r \geq p,q$ is unique. It is obvious that $r$ is the smallest element in $L_{n,m}$ such that $r \geq p,q$ when $s_{i}^{''} = \max(s_{i},s_{i}^{'})$, and such $r$ is unique. That is, $p \vee q = r$, and
+          \begin{align*}
+            p \vee q = \left( \max(s_{i}, s_{i}^{'}) \right)_{i=1,\ldots,m}
+          \end{align*}
+      \end{itemize}
+      Therefore, the partial order $(L_{n,m}, \leq)$ is a lattice.
+    \item The lattice $L_{n,m}$ is distributive. Let $p = (s_{1}, \ldots, s_{m}) \in L_{n,m}$, $q = (s_{1}^{'}, \ldots, s_{m}^{'}) \in L_{n,m}$, and $r = (s_{1}^{''}, \ldots, s_{m}^{''}) \in L_{n,m}$, we want to verify the following conditions
+      \begin{itemize}
+        \item $p \vee (q \wedge r) = (p \vee q) \wedge (p \vee r)$. That is, we want to prove the following equation holds
+          \begin{align*}
+            \max(s_{i}, \min(s_{i}^{'}, s_{i}^{''})) = \min(\max(s_{i},s_{i}^{'}), \max(s_{i},s_{i}^{''})) \tag{2.1}
+          \end{align*}
+          In case that $s_{i} \leq \min(s_{i}^{'}, s_{i}^{''})$, then the LHS and RHS of the equation $(2.1)$ are equal to $\min(s_{i}^{'}, s_{i}^{''})$, and thus the equation holds in this case. 
+
+          Otherwise, when $s_{i} \geq \min(s_{i}^{'}, s_{i}^{''})$, then the LHS of the equation $(2.1)$ is equal to $s_{i}$, and $s_{i}$ is larger than either $s_{i}$ or $s_{i}^{'}$, or $s_{i}$ is larger than both. If $s_{i}$ is larger than either $s_{i}^{'}$ or $s_{i}^{''}$, then the RHS of the equation $(2.1)$ is equal to either $\min(s_{i},s_{i}^{''})$ or $\min(s_{i}^{'},s_{i})$ respectively, and thus the RHS of the equation is equal to either $\min(s_{i},s_{i}^{''})= s_{i}$ or $\min(s_{i}^{'}, s_{i}) = s_{i}$; hence, the LHS and RHS of the equation $(2.1)$ are equal to each other in this case. If $s_{i}$ is larger than both $s_{i}^{'}$ and $s_{i}^{''}$, then the RHS of the equation is equal to $\min(s_{i}, s_{i}) = s_{i}$, and thus the LHS and RHS of the equation $(2.1)$ are equal to each other in this case. Therefore, the equation $(2.1)$ always holds.
+        \item $p \wedge (q \vee r) = (p \wedge q) \vee (p \wedge r)$. This can be shown to be true by using the similar logic described above.
+      \end{itemize}
+      Therefore, the lattice $L_{n,m}$ is distributive, and the proof for (i) is finished.
+  \end{enumerate}
+  \vspace{5pt}
+  \hrule
+  (ii): Based on the idea of showing that the binary relation $(L_{n,m}, \leq)$ is a partial order on $L_{n,m}$, which is presented in the previous part, it is easy to verify that $(S_{n,m}, \leq)$ is a partial order on $S_{n,m}$. That is, it remains to show that 
+  \begin{enumerate}[label=(\alph*)]
+    \item The partial order $(S_{n,m}, \leq)$ is a lattice. Let $p = (s_{1}, \ldots, s_{m}) \in S_{n,m}$ and $q = (s_{1}^{'}, \ldots, s_{m}^{'}) \in S_{n,m}$, we want to verify the following conditions
+      \begin{itemize}
+        \item The largest element $r = (s_{1}^{''}, \ldots, s_{m}^{''}) \in S_{n,m}$ such that $r \leq p,q$ is unique. It is obvious that $r$ is the largest element in $L_{n,m}$ such that $r \leq p,q$ when $s_{i}^{''} = \min(s_{i}, s_{i}^{'})$ for $1 \leq i \leq m$, and such $r$ is unique. That is, it remains to determine whether $r \in S_{n,m}$. To be more specific, we want to check whether $s_{j}^{''} < s_{i}^{''}$ for $1 \leq j < i \leq m$. Recall that, we are considering $s_{j}^{''} = \min(s_{j},s_{j}^{'})$ and $s_{i}^{''} = \min(s_{i},s_{i}^{'})$. It is worth to note that $s_{j} < s_{i}$ and $s_{j}^{'} < s_{i}^{'}$ for $1 \leq j < i \leq m$, since $p,q \in S_{n,m}$. Next, we consider the following cases
+          \begin{itemize}
+            \item If $s_{i} \leq s_{i}^{'}$ and $s_{j} \leq s_{j}^{'}$, then $s_{i}^{''} = s_{i}$ and $s_{j}^{''} = s_{j}$. Since $s_{j} < s_{i}$, then $s_{j}^{''} < s_{i}^{''}$.
+            \item If $s_{i} \geq s_{i}^{'}$ and $s_{j} \geq s_{j}^{'}$, then $s_{i}^{''} = s_{i}^{'}$ and $s_{j}^{''} = s_{j}^{'}$. Since $s_{j}^{'} < s_{i}^{'}$, then $s_{j}^{''} < s_{i}^{''}$.
+            \item If $s_{i} \leq s_{i}^{'}$ and $s_{j} \geq s_{j}^{'}$, then $s_{i}^{''} = s_{i}$ and $s_{j}^{''} = s_{j}^{'}$. Since $s_{j}^{'} \leq s_{j} < s_{i}$, then $s_{j}^{''} < s_{i}^{''}$.
+            \item If $s_{i} \geq s_{i}^{'}$ and $s_{j} \leq s_{j}^{'}$, then $s_{i}^{''} = s_{i}^{'}$ and $s_{j}^{''} = s_{j}$. Since $s_{j} \leq s_{j}^{'} < s_{i}^{'}$, then $s_{j}^{''} < s_{i}^{''}$.
+          \end{itemize}
+          Therefore, $r \in S_{n,m}$, as the inequality $s_{j}^{''} < s_{i}^{''}$ always holds for $1 \leq j < i \leq m$. That is, $p \wedge q = r$, and
+          \begin{align*}
+            p \wedge q = \left( \min(s_{i},s_{i}^{'}) \right)_{i=1,\ldots,m}
+          \end{align*}
+        \item The smallest element $r = (s_{1}^{''}, \ldots, s_{m}^{''}) \in S_{n,m}$ such that $r \geq p,q$ is unique. It is obvious that $r$ is the smallest element in $L_{n,m}$ such that $r \geq p,q$ when $s_{i}^{''} = \max(s_{i},s_{i}^{'})$ for $1 \leq i \leq m$, and such $r$ is unique. By similarly applying the logic presented previously, we can conclude that $r \in S_{n,m}$. That is, $p \vee q = r$, and
+          \begin{align*}
+            p \vee q = \left( \max(s_{i},s_{i}^{'}) \right)_{i=1,\ldots,m}
+          \end{align*}
+      \end{itemize}
+      Therefore, the partial order $(S_{n,m}, \leq)$ is a lattice.
+    \item The lattice $S_{n,m}$ is distributive. With $p \wedge q$, and $p \vee q$ defined previously for $p,q \in S_{n,m}$, we can show the lattice $S_{n,m}$ is distributive similarly to the way that we show the lattice $L_{n,m}$ is distributive in the statement (i).
+  \end{enumerate}
+  Therefore, the lattice $S_{n,m}$ is a distributive lattice.
+\end{proof}
+
+\begin{problem}
+  Consider the following experiment: For $1 \leq m \leq n$ there are $m$ balls thrown one by one into $n$ baskets. In which baskets the balls land are independent and the $j$-th ball will land with probability $p_{a_{i},j}$ in the basket $a_{i}$.
+  \begin{enumerate}[label=(\roman*)]
+    \item Define the probability space and identify the outcomes with $L_{n,m}$ from $(2)$.
+    \item For $I \subseteq [m]$ and $t_{I} \in R$ define the event
+      \begin{align*}
+        A_{I} \coloneqq \{ (a_{1}, \ldots, a_{m}) \in L_{n,m} \ | \ \sum\limits_{i \in I} a_{i} \geq t_{I} \}.
+      \end{align*}
+      Show that, for $I,J \subseteq [m]$ with $I \cap J = \emptyset$ or $I \cup J = [m]$ and real numbers $t_{I}$ and $t_{J}$ it holds that
+      \begin{align*}
+        \mathbb{P}(A_{I} \cap A_{J}) \geq \mathbb{P}(A_{I}) \mathbb{P}(A_{J}).
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (i): The probability space for the experiment is the discrete probability space $(\Omega, \mathbb{P})$ where $\Omega = L_{n,m}$, or the set of all $m$-tuples of $[n]$ in form of $(a_{1},\ldots,a_{m})$, where $a_{i}$ is the basket in which the $i$-th ball lands. Moreover, the probability measure $\mathbb{P}$ of this discrete probability space is 
+  \begin{align*}
+    \mathbb{P}\Big( (a_{1},\ldots,a_{m}) \Big) = p_{a_{1},1} \cdot p_{a_{2},2} \cdot \ldots \cdot p_{a_{m},m}
+  \end{align*}
+  for any $(a_{1},\ldots,a_{m}) \in \Omega$.
+  \vspace{5pt}
+  \hrule
+  (ii): In order to show the inequality holds, we want to apply Corollary $12.3$ from the lecture. To be more specific, the inequality automatically holds when $\Omega$ is a distributive lattice, for which $\mathbb{P}$ is log-supermodular, and $A_{I}, A_{J}$ are monotonically increasing events. It is known from the previous problem that $\Omega = L_{n,m}$ is a distributive lattice; hence, it remains to show that $\mathbb{P}$ is log-supermodular, and $A_{I}$, $A_{J}$ are monotonically increasing events.
+
+  It is known that $\mathbb{P}$ is log-supermodular when $\mathbb{P}(x) \geq 0$ for all $x \in \Omega$, which is always true since $\mathbb{P}$ is a probability measure, and the following inequality holds for $x,y \in \Omega$
+  \begin{align*}
+    \mathbb{P}(x)\mathbb{P}(y) \leq \mathbb{P}(x \vee y) \mathbb{P}(x \wedge y) \tag{3.1}
+  \end{align*}
+  Let $x = (a_{1},\ldots,a_{m})$ and $y = (a_{1}^{'},\ldots,a_{m}^{'})$. Consider the LHS of the equation $(3.1)$, we have
+  \begin{align*}
+    \mathbb{P}(x)\mathbb{P}(y) &= \mathbb{P}(a_{1},\ldots,a_{m}) \mathbb{P}(a_{1}^{'},\ldots,a_{m}^{'}) \\
+                               &= \prod\limits_{i=1}^{m} p_{a_{i},i} p_{a_{i}^{'},i} \tag{3.2}
+  \end{align*}
+  It is worth to notice that $a_{i} \leq a_{i}^{'}$ or $a_{i} \geq a_{i}^{'}$ for $1 \leq i \leq m$. Hence, we can rewrite the equation $(3.2)$ as follows 
+  \begin{align*}
+    \mathbb{P}(x)\mathbb{P}(y) = \prod\limits_{i=1}^{m} p_{\max(a_{i},a_{i}^{'}),i} p_{\min(a_{i},a_{i}^{'}),i} \tag{3.3}
+  \end{align*}
+  Moreover, by the definition of the operations $\vee$ and $\wedge$ in $L_{n,m}$ in the previous problem, we have
+  \begin{itemize}
+    \item $\prod\limits_{i}^{m} p_{\max(a_{i},a_{i}^{'}),i} = \mathbb{P} \Big( \big(\max(a_{i},a_{i}^{'})\big)_{i=1,\ldots,m} \Big) = \mathbb{P}(x \vee y)$
+    \item $\prod\limits_{i}^{m} p_{\max(a_{i},a_{i}^{'}),i} = \mathbb{P} \Big( \big(\min(a_{i},a_{i}^{'})\big)_{i=1,\ldots,m} \Big) = \mathbb{P}(x \wedge y)$
+  \end{itemize}
+  Hence, $\mathbb{P}(x)\mathbb{P}(y) = \mathbb{P}(x \vee y) \mathbb{P}(x \wedge y)$, and thus the inequality $(3.1)$ is true. Therefore, $\mathbb{P}$ is log-supermodular. 
+
+  In order to show that $A_{I}$ is monotonically increasing event, we want show that for $(a_{1},\ldots,a_{m})$ and $(a_{1}^{'},\ldots,a_{m}^{'})$ in $A_{I}$ such that $(a_{1},\ldots,a_{m}) \leq (a_{1}^{'},\ldots,a_{m}^{'})$, then $\sum\limits_{i \in I} a_{i}^{'} \geq \sum\limits_{i \in I} a_{i} \geq t_{I}$. This is indeed true, since these tuples are in $A_{I}$, then $\sum\limits_{i \in I} a_{i}^{'} \geq t_{I}$ and $\sum\limits_{i \in I} a_{i} \geq t_{I}$. Moreover, since $(a_{1},\ldots,a_{m}) \leq (a_{1}^{'},\ldots,a_{m}^{'})$, then $a_{i} \leq a_{i}^{'}$ for $1 \leq i \leq m$. Therefore, $\sum\limits_{i \in I} a_{i}^{'} \geq \sum\limits_{i \in I} a_{i} \geq t_{I}$, and $A_{I}$ is monotonically increasing event. Similarly, we can show that $A_{J}$ is monotonically increasing event.
+
+  Therefore, the Corollary $12.3$ in the lecture is satisfied, the proof is finished.
+\end{proof}

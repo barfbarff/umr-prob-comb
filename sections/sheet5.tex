@@ -1,0 +1,129 @@
+\begin{problem}
+  Show that for the Erdős-Renyi model, if $p \ll 1/n$, then
+  \begin{align*}
+    \mathbb{P}(G(n, p_{n}) \text{ contains a cycle}) \to 0
+  \end{align*}
+  Here, a cycle (of length $k$) in a graph $G=(V,E)$ is a sequence of $k$ pairwise distinct vertices $v_{1}, \ldots, v_{k} \in V$, such that $\{v_{i}, v_{i+1}\}$ for $1 \leq i < k$ and $\{v_{k},v_{1}\}$.
+\end{problem}
+\begin{proof}
+  Recall that the Erdős-Renyi model $G(n, p_{n})$ is the discrete probability space $(\Omega_{n}, \mathbb{P})$ where the sample space $\Omega_{n}$ is the set of all undirected graphs $G = ([n], E)$ while the probability measure $\mathbb{P}(G) = p_{n}^{|E|} (1 - p_{n})^{n - |E|}$ for any graph $G \in \Omega_{n}$. 
+
+  Next, we define the random variable $X_{n} : \Omega_{n} \to \mathbb{N}$ that assigns to each graph $G \in \Omega_{n}$ the number of cycles in $G$, and the original problem turns into the problem of showing that
+  \begin{align*}
+    \lim\limits_{n \to \infty} \mathbb{P}(X_{n} > 0) = 0
+  \end{align*}
+  Based on the definition of cycle given above, any cycle in $G$ must involve at least $3$ distinct vertices in $G$. That is, for any integer $k \in [3,n]$, we define the random variable $X_{n}^{(k)} : \Omega_{n} \to \mathbb{N}$ that assigns to each graph $G \in \Omega_{n}$ the number of cycles of length $k$ in $G$. Moreover, it is obvious that $X_{n} = \sum\limits_{k = 3}^{n} X_{n}^{(k)}$
+
+  Let $S_{k}$ be the set of all possible sequences of $k$ distinct vertices in $G$. Fixed a sequence $S \in S_{k}$, let the indicator random variable $X_{n}^{(S)} : \Omega_{n} \to \mathbb{N}$ defined by the following rule for any graph $G \in \Omega_{n}$:
+  \begin{align*}
+    X_{n}^{(S)}(G) = 
+    \begin{cases}
+      1 \text{ if $S$ is a cycle in $G$} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  This implies that $X^{(k)} = \sum\limits_{S \in S_{k}} X_{n}^{(S)}(G)$. Next, we define the indicator variable $X_{n}^{(S)} = 1_{A_{n}^{(S)}}$ of the event
+  \begin{align*}
+    A_{n}^{(S)} = \{G = ([n], E) | S \text{ is a cycle in $G$}\} 
+  \end{align*}
+  then $\mathbb{E}(X_{n}^{(S)}) = \mathbb{E}(1_{A_{n}^{(S)}}) = \mathbb{P}(A_{n}^{(S)})$. It is known that, for an arbitrary graph $G \in \Omega_{n}$, the sequence of vertices $S = v_{1}v_{2} \ldots v_{k}$ is a cycle when the edges $\{v_{i}, v_{i + 1}\}$ and $\{v_{k}, v_{1}\}$ are presented in $G$ for $1 \leq i < k$. That is, such $k$ edges must be presented in $G$ so that $S$ can be a cycle in $G$. Since the probability of choosing a graph $G \in \Omega_{n}$ having a specific edge is $p_{n}$. Hence,
+  \begin{align*}
+    \mathbb{P}(A_{n}^{(S)}) = p_{n}^{k} \tag{1.1}
+  \end{align*}
+  Recall that $X_{n}^{(k)} = \sum\limits_{S \in S_{k}} X_{n}^{(S)}$. By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(X_{n}^{(k)}) = \sum_{S \in S_{k}} \mathbb{E}(X_{n}^{(S)}) = \sum_{S \in S_{k}} \mathbb{P}(A_{n}^{(S)}) \tag{1.2} 
+  \end{align*}
+  As $\mathbb{P}(A_{n}^{(S)})$ is known due to the equation $(1.1)$, we now want to calculate $|S_{k}|$ in order to calculate $\mathbb{E}(X_{n}^{(k)})$ based on the equation $(1.2)$. In order to construct $S_{k}$, we firstly select $k$ distinct vertices from $G$. For each selection, there are $k!$ ways to form different sequences. Moreover, there are $\binom{n}{k}$ ways to choose $k$ distinct vertices from $G$; hence $|S_{k}| = \binom{n}{k}k!$. Therefore, by the equation $(1.2)$, we have
+  \begin{align*}
+    \mathbb{E}(X_{n}^{(k)}) &= \binom{n}{k} k! p_{n}^{k} \\
+                            &= \frac{n(n-1) \ldots (n-k+1)(n-k)!}{k! (n-k)!} k! p_{n}^{k} \\
+                            &= n(n-1) \ldots (n-k+1) p_{n}^{k} \\
+                            &\leq (n p_{n})^{k} \tag{1.3}
+  \end{align*}
+  Due to the equation $(1.3)$ and the fact that $X_{n} = \sum\limits_{k=3}^{n} X_{n}^{(k)}$, by linearity of expectation, we have,
+  \begin{align*}
+    \mathbb{E}(X_{n}) = \sum_{k=3}^{n} \mathbb{E}(X_{n}^{(k)}) \leq \sum_{k=3}^{n} (n p_{n})^{k} \tag{1.4}
+  \end{align*}
+  Let $a = np$, and thus $\sum\limits_{k=3}^{n} (np^{n})^{k} = \sum\limits_{k=3}^{n} a^{k}$. It is known from the sum of geometric series that $\sum\limits_{k=0}^{n} a^{k} = \frac{a^{n+1}-1}{a-1}$. Therefore,
+  \begin{align*}
+    \sum_{k=3}^{n} (n p_{n})^{k} &= \sum_{k=3}^{n} a^{k} \\
+                                 &= \frac{a^{n+1}-1}{a-1} - a^{2} - a^{1} - a^{0} \\
+                                 &= \frac{a^{n+1} - a^{3}}{a-1} \tag{1.5}
+  \end{align*}
+  Moreover, since $p_{n} \ll 1/n$, then $p_{n} = o(1/n)$. This implies that $\lim\limits_{n \to \infty} np = 0$, or $\lim\limits_{n \to \infty} a = 0$. This implies that $\lim\limits_{n \to \infty} \frac{a^{n+1} - a^{3}}{a-1} = 0$. By the equation $(1.5)$, we have $\lim\limits_{n \to \infty} \sum\limits_{k=3}^{n} (n p_{n})^{k} = 0$. It follows from the equation $(1.4)$ that 
+  \begin{align*}
+    \lim\limits_{n \to \infty} \mathbb{E}(X_{n}) = 0
+  \end{align*}
+  this implies that $\mathbb{E}(X_{n}) = o(1)$. It follows from the Corollary $6.3$ in the lecture that
+  \begin{align*}
+    \lim\limits_{n \to \infty} \mathbb{P}(X_{n} > 0) = 0
+  \end{align*}
+  and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Show that 
+  \begin{enumerate}[label=\arabic*)]
+    \item For $n \geq 3$ and a graph $G=(V,E)$ with $\# V = n$ and $\# E \geq n$, there is a cycle in $G$.
+    \item $p(n) = 1/n$ is a threshold function for the monotone graph property "$G(n,p)$ has a cycle".
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  The statement $(i)$ can be proved using induction on $n$. That is, we firstly show that such statement holds for the base case where $n=3$. In this case, since there are at least $3$ edges in $G$, then there must be an edge between any two of $3$ vertices in $G$, and thus $G$ contains at least one cycle. Therefore, the statement holds for the base case.
+
+  Next, suppose inductively that $G$ contains a cycle when $|V| = n$ and $|E| \geq n$ for $n \geq 3$, we want to show that $G$ also contains a cycle when $|V| = n+1$ and $|E| \geq n+1$. In order to do so, we consider the following cases
+  \begin{itemize}
+    \item There is at least one vertex in $G$ having degree of either $0$ or $1$. In this case, fixed a vertex $v$ in $G$ having such property, then the induced subgraph $G^{'}$ of $G$, where its vertices are in the set $V - \{v\}$, has $n$ vertices and either $n+1$ or $n$ edges when degree of $v$ is either $0$ or $1$ respectively. It follows from the induction hypothesis that $G^{'}$ contains a cycle, and thus $G$ contains a cycle since $G^{'}$ is a subgraph of $G$.
+    \item  Otherwise, any vertex in $G$ has degree of at least $2$. Let $P = \{v_{1},v_{2}\}, \{v_{2},v_{3}\}, \ldots, \{v_{k-1},v_{k}\}$ be the longest path in $G$. Since the vertex $v_{k}$ has degree of at least $2$, then there must be an edge between $v_{k}$ and any other vertex $v$ in $G$ that is not $v_{k-1}$. If such vertex does not belong to $P$, then there exists a path in $G$ that is longer than $P$. However, this is a contradiction to the fact that $P$ is the longest path in $G$. This implies that $v$ must belong to $P$. Therefore, $v_{k}$ must have an edge to $v_{i}$ where $1 \leq i \leq k-2$. Therefore, the sequence of vertices $v_{i},v_{i+1},\ldots,v_{k}$ is a cycle in $G$. 
+  \end{itemize}
+  Due to the reasons given above, a graph $G$ with $|V| = n+1$ and $|E| \geq n+1$ must contain a cycle when another graph $G$ with $|V| = n$ and $|E| \geq n$ contains a cycle. Therefore, we have closed the induction, and the proof is finished for the statement $(i)$.
+  \vspace{5pt}
+  \hrule
+  Regarding the statement $(ii)$, due to the Problem $1$, it remains to show that when $p_{n} \gg 1/n$, then
+  \begin{align*}
+    \mathbb{P}(G(n,p_{n}) \text{ contains a cycle}) \to 1
+  \end{align*}
+  Based on the statement $(i)$, it is known that any graph with $n$ vertices having at least $n$ edges must contain a cycle. That is, the idea to prove this is to show that the number of edges in any graph that is generated by $G(n,p_{n})$ must be at least $n$ when $n$ goes to infinity. 
+
+  Recall that the Erdős-Renyi model $G(n, p_{n})$ is the discrete probability space $(\Omega_{n}, \mathbb{P})$ where the sample space $\Omega_{n}$ is the set of all undirected graphs $G = ([n], E)$ while the probability measure $\mathbb{P}(G) = p_{n}^{|E|} (1 - p_{n})^{n - |E|}$ for any graph $G \in \Omega_{n}$. 
+  
+  Due to the idea described above, we define the random variable $X_{n} : \Omega_{n} \to \mathbb{N}$ that assigns to each graph $G \in \Omega_{n}$ the number of edges in $G$. Let $S$ be the set of all unordered pairs of vertices in $G$. Fixed a pair $s \in S$, let $X_{n}^{(s)} : \Omega_{n} \to \mathbb{N}$ be the indicator random variable defined by the following rule for any graph $G \in \Omega_{n}$:
+  \begin{align*}
+    X_{n}^{(s)} = 
+    \begin{cases}
+      1 \text{ if the edge $s$ is presented in $G$} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  Since the probabilities to choose a graph $G \in \Omega_{n}$ having and not having a specific edge are $p_{n}$ and $1-p_{n}$ respectively, then $\mathbb{P}(X_{n}^{(s)}=1)=p_{n}$ and $\mathbb{P}(X_{n}^{(s)}=0)=1-p_{n}$. Moreover, since $X_{n} = \sum\limits_{s \in S} X_{n}^{(s)}$, then $X_{n}$ must have binomial distribution. This is because $X_{n}^{(s)}$ is an indicator random variable and the fact that $X_{n}^{(s_{1})}$ and $X_{n}^{(s_{2})}$ are independent from each other for distinct $s_{1},s_{2} \in S$. Therefore, we have $\mathbb{E}(X_{n}) = |S| p_{n}$ and $\text{Var}(X_{n}) = |S| p_{n} (1-p_{n})$. Since any graph $G \in \Omega_{n}$ is undirected, then $|S| = \binom{n}{2}$, and thus 
+  \begin{align*}
+    \mathbb{E}(X_{n}) = \binom{n}{2}p_{n} \text{ and } \text{Var}(X_{n}) = \binom{n}{2} p_{n} (1-p_{n})
+  \end{align*}
+  ...
+\end{proof}
+
+\begin{problem}
+  Show for a monotone graph $\mathcal{P} = \{\mathcal{P}_{n}\}_{n \in \mathbb{N}}$ and parameters $0 \leq p_{1} \leq p_{2} \leq 1$ that
+  \begin{align*}
+    \mathbb{P}(G(n,p_{1}) \in \mathcal{P}) \leq \mathbb{P}(G(n,p_{2}) \in \mathcal{P}).
+  \end{align*}
+  Here $\mathbb{P}$ denotes the probability induced the corresponding parameter in $G(n,p)$
+\end{problem}
+\begin{proof}
+  Let $p$ be any real number in the interval $[0,1]$, we define $p_{2} = p_{1} + (1-p_{1})p$. Next, let $G$ and $G_{1}$ be graphs that are randomly generated by $G(n,p)$ and $G(n,p_{1})$, respectively. 
+
+  Now, we define $G_{2} = G \cup G_{1}$, this means that $G_{2}$ has $n$ vertices and the edges of $G_{2}$ are in $E(G) \cup E(G_{1})$. Moreover, this implies that an edge in $G_{2}$ can only exist when it is presented in either $G$ or $G_{1}$. Recall that in $G(n,p)$, the probability to generate a graph having and not having a specific edge is $p$ and $1-p$, while in $G(n,p_{1})$ they are $p_{1}$ and $1-p_{1}$. That is, the probability of choosing graphs $G$ and $G_{1}$ in $G(n,p)$ and $G(n,p_{1})$ respectively, such that $G_{2}$ can have a specific edge $e$ is actually the sum of the probabilities of the following events
+  \begin{enumerate}
+    \item Edge $e$ is presented in $G_{1}$, but not in $G$. The probability of this event is $p_{1}(1-p)$
+    \item Edge $e$ is presented in $G$, but not in $G_{1}$. The probability of this event is $p(1-p_{1})$
+    \item Edge $e$ is presented in both $G$ and $G_{1}$. The probability of this event is $p_{1}p$
+  \end{enumerate}
+  Therefore, the probability that $G(n,p)$ and $G(n,p_{1})$ generate $G$ and $G_{1}$ respectively, such that a specific edge $e$ is presented in $G_{2}$ is 
+  \begin{align*}
+    p_{1}(1-p) + (1-p_{1})p  + p_{1}p = p_{1} + (1-p_{1})p
+  \end{align*}
+  Combine this fact with our definition that $p_{2} = p_{1} + (1-p_{1})$, we can conclude that $G_{2}$ is a graph that is randomly generated by $G(n,p_{2})$.
+
+  Recall that $G_{2} = G \cup G_{1}$. In fact, this union can be perceived as an addition of edges, which are presented in a graph $G$, to a graph $G_{1}$, and the result of such addition is a graph $G_{2}$. It follows that $G(n,p_{2}) \in \mathcal{P}$, since $\mathcal{P}$ is a monotone graph property and $G(n,p_{1}) \in \mathcal{P}$. That is, it remains to show that $\mathbb{P}(G(n,p_{1}) \in \mathcal{P}) \leq \mathbb{P}(G(n,p_{2}) \in \mathcal{P})$. Since $G_{2} = G \cup G_{1}$, then $G_{1}$ is a subgraph of $G_{2}$, and thus $\mathbb{P}(G(n,p_{1}) \in \mathcal{P}) \leq \mathbb{P}(G(n,p_{2}) \in \mathcal{P})$ as $\mathcal{P}$ is a monotone graph property and the number of edges in $G_{2}$ is always more than or equal to the number of edges in $G_{1}$. Hence, the proof is finished.
+\end{proof}

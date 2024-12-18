@@ -1,0 +1,209 @@
+\begin{problem}
+  There is a chess tournament with $40$ players with $80$ games played, where every two players face each other at most once. Proof:
+  \begin{enumerate}[label=(\roman*)]
+    \item There are at least $8$ players, no two of which played each other.
+    \item For real numbers $a_{1}, \ldots, a_{r} > -1$ holds
+      \begin{align*}
+        \frac{1}{a_{1} + 1} + \ldots + \frac{1}{a_{r} + 1} \geq \frac{r^{2}}{(a_{1} + 1) + \ldots + (a_{r} + 1)}
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  Let $P$ be the set of players in the chess tournament. Moreover, let the players in $P$ uniquely labelled by numbers in $[40]$, which means $P = [40]$. Next, let the bijective function $f : P \to [40]$ be a ranking of players in the tournament. The idea to solve this problem is to determine whether there exists a ranking among all possible rankings where it is possible to pick at least $8$ players who only played against players with lower rank. If such ranking exists, then the problem is solved since no two of these players played each other. 
+
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of all rankings, or bijective functions $f : P \to [40]$, while the probability measure $\mathbb{P}(\omega) = \frac{1}{40!}$ for any $\omega \in \Omega$. Next, we define the random variable $X : \Omega \to \mathbb{N}$ that assigns to any ranking $\omega \in \Omega$ the number of players in such ranking that only played against players with lower rank. For any player $p \in P$, let the random variable $X_{p} : \Omega \to \mathbb{N}$ defined by the following rule for any $\omega \in \Omega$
+  \begin{align*}
+    X_{p}(w) = 
+    \begin{cases}
+      1 \text{ if $p$ only played against players with lower rank} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  Next, we define the indicator variable $X_{p} = 1_{A_{p}}$ of event
+  \begin{align*}
+    A_{p} = \{ \omega \in \Omega \ | \ \text{ $p$ only played against players with lower rank} \}   
+  \end{align*}
+  then $\mathbb{E}(X_{p}) = \mathbb{E}(1_{A_{p}}) = \mathbb{P}(A_{p})$. In order to calculate $\mathbb{P}(A_{p})$, we must firstly know $|A_{p}|$, which can be calculated as follows. First of all, let $a_{p}$ be the number of players that $p$ played against. In order to rank $p$ and the players that $p$ played against, we pick $a_{p} + 1$ unique numbers from $[40]$, and there are $\binom{40}{a_{p} + 1}$ ways to do so. In each way, we must use the largest number to rank $p$, and other numbers to rank the players that $p$ played against. Moreover, the rank between the players that $p$ played against is not important at all, this implies that there are $a_{p}!$ ways to rank the players that $p$ played against. Therefore, there are $a_{p}!$ ways to rank $p$ and the players that $p$ played against for each subset of $[40]$ of size $a_{p} + 1$. Furthermore, for each such subset and each way to rank $p$ and the players that $p$ played against in a way that $p$ only played against players with lower rank, the players that are not $p$ or the ones that $p$ played against can be ranked arbitrarily using $40 - (a_{p} + 1)$ unique numbers left, and there are $(40 - a_{p} - 1)!$ ways to do so. Therefore,
+  \begin{align*}
+    |A_{p}| = \binom{40}{a_{p} + 1} a_{p}! (40 - a_{p} - 1)!
+  \end{align*}
+  Hence,
+  \begin{align*}
+    \mathbb{P}(A_{p}) &= \frac{|A_{p}|}{40!} \\
+                      &= \frac{\binom{40}{a_{p} + 1} a_{p}! (40 - a_{p} - 1)!}{40!} \\
+                      &= \frac{40!}{(a_{p} + 1)! (40 - a_{p} - 1)!} \frac{a_{p}! (40 - a_{p} - 1)!}{40!} \\
+                      &= \frac{a_{p}!}{(a_{p} + 1) a_{p}!} \\
+                      &= \frac{1}{a_{p} + 1}
+  \end{align*}
+  Note that, $X = \sum_{p \in P} X_{p}$. By linearity of expectation and $P = [40]$, we have
+  \begin{align*}
+    \mathbb{E}(X) &= \sum_{p \in P} \mathbb{E}(X_{p}) = \sum_{p \in P} \mathbb{P}(A_{p}) \\
+                  &= \frac{1}{a_{1} + 1} + \ldots + \frac{1}{a_{40} + 1}
+  \end{align*}
+  It follows from $(ii)$ that
+  \begin{align*}
+    \mathbb{E}(X) &\geq \frac{40^{2}}{(a_{1} + 1) + \ldots + (a_{40} + 1)} \\
+    \Leftrightarrow \mathbb{E}(X) &\geq \frac{40^{2}}{(a_{1} + \ldots + a_{40}) + 40}
+  \end{align*}
+  For two distinct players $p_{1}, p_{2} \in P$ that played each other, $p_{2}$ and $p_{1}$ is counted in $a_{p_{1}}$ and $a_{p_{2}}$, respectively. That is, the result of $a_{1} + \ldots + a_{40}$ is actually the number of games in the chess tournament multiplied by $2$. Therefore, the inequality above is equivalent to
+  \begin{align*}
+    \mathbb{E}(X) &\geq \frac{40^{2}}{160 + 40} \\
+    \Leftrightarrow \mathbb{E}(X) &\geq 8
+  \end{align*}
+  This implies that there must exist a ranking of players in the chess tournament where it is possible to pick at least $8$ players that only played against players with lower rank. Due to the logic provided at the beginning of the proof, this implies that there are at least $8$ players in the chess tournament that no two of which played each other, and the proof for $(i)$ is finished.
+
+  In order to prove $(ii)$, we want to use Cauchy-Schwarz inequality. To be more specific, we have 
+  \begin{align*}
+    && \left[ \sum_{i = 1}^{r} \left( \frac{1}{\sqrt{a_{i} + 1}} \right)^{2} \right] \left[ \sum_{i = 1}^{r} \left( \sqrt{a_{i} + 1} \right)^{2} \right] &\geq \left[ \sum_{i = 1}^{r} \left( \frac{1}{\sqrt{a_{i} + 1}} \right) \left( \sqrt{a_{i} + 1}) \right) \right]^{2} \\
+    \Leftrightarrow && \left( \sum_{i = 1}^{r} \frac{1}{a_{i} + 1} \right) \left( \sum_{i = 1}^{r} a_{i} + 1 \right) &\geq \left( \sum_{i=1}^{r} i \right)^{2} \\
+    \Leftrightarrow && \left( \sum_{i = 1}^{r} \frac{1}{a_{i} + 1} \right) \left( \sum_{i = 1}^{r} a_{i} + 1 \right) &\geq r^{2} \\ 
+    \Leftrightarrow && \left( \sum_{i = 1}^{r} \frac{1}{a_{i} + 1} \right) &\geq \frac{r^{2}}{\left( \sum_{i = 1}^{r} a_{i} + 1 \right)} \\
+    \Leftrightarrow && \frac{1}{a_{1} + 1} + \ldots + \frac{1}{a_{r} + 1} &\geq \frac{r^{2}}{(a_{1} + 1) + \ldots + (a_{r} + 1)}
+  \end{align*}
+  and the proof for $(ii)$ is finished.
+\end{proof}
+
+\begin{problem}
+  A subset $\Sigma \subseteq [n]$ is called additively free, if for every two subsets $A,B \subseteq \Sigma$:
+  \begin{align*}
+    \sum_{i \in A} i = \sum_{i \in B} i \implies A = B
+  \end{align*}
+  \begin{enumerate}[label=(\roman*)]
+    \item Find an additively free subset $\Sigma \subseteq [n]$ such that $|\Sigma| = \lfloor \log_{2}(n) \rfloor + 1$
+    \item Use the Chebyshev's inequality to show: There is an upper bound for the cardinality of an additively free subset $\Sigma \subseteq [n]$ given by
+      \begin{align*}
+        |\Sigma| \leq \log_{2}(n) + \log_{2} \log_{2}(n) + 1
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  No idea.
+\end{proof}
+
+
+\begin{problem}
+  Consider the Erdős-Renyi model $G(n, p_{n})$ for random generating graphs. Let $X_{1}$ be the number of isolated vertices in $G(n, p_{n})$. Proof: If $p_{n} = \frac{c_{n} \log(n)}{n}$ for some $c_{n} \gg 1$, then
+  \begin{align*}
+    \mathbb{P}(X_{1} > 0) = o(1)
+  \end{align*}
+\end{problem}
+\begin{proof}
+  Recall that $G(n, p_{n})$ is the discrete probability space $(\Omega_{n}, \mathbb{P})$ where the sample space $\Omega_{n}$ is the set of all undirected graphs $G = ([n], E)$ while the probability measure $P(G) = p_{n}^{|E|}(1-p_{n})^{\binom{n}{2} - |E|}$ for any $G \in \Omega_{n}$.
+
+  For easier interpretation, let $X_{n} : \Omega_{n} \to \mathbb{N}$ be the random variable that assigns to any graph $G \in \Omega_{n}$ the number of isolated vertices in $G$, and thus $X_{n} = X_{1}$. That is, the original problem turns into the problem of showing that
+  \begin{align*}
+    \lim_{n \to \infty} \mathbb{P}(X_{n} > 0) = 0 \tag{3.1}
+  \end{align*}
+  For a graph $G \in \Omega_{n}$ and an arbitrary vertex numbered $i$ in $G$, let the random variable $X_{n}^{(i)} : \Omega_{n} \to \mathbb{N}$ defined by the following rule  
+  \begin{align*}
+    X_{n}^{(i)}(G) = 
+    \begin{cases}
+      1 \text{ if the vertex numbered $i$ is isolated in $G$} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  Next, we define the indicator variable $X_{n}^{(i)} = 1_{A_{n}^{(i)}}$ of event 
+  \begin{align*}
+    A_{n}^{(i)} = \{ G = ([n], E) \ | \ \text{ the vertex numbered $i$ is isolated in $G$}\} 
+  \end{align*}
+  then $\mathbb{E}(X_{n}^{(i)}) = \mathbb{E}(1_{A_{n}^{(i)}}) = \mathbb{P}(A_{n}^{(i)})$. For an arbitrary vertex numbered $i$ to be isolated in a graph $G \in \Omega_{n}$, there must be no edges between this vertex and any other vertices in $G$. Moreover, there are $n-1$ possible edges between this vertex and any other vertices in $G$, and the probability of choosing a graph $G \in \Omega_{n}$ that does not have a specific edge is $1 - p_{n}$; hence,
+  \begin{align*}
+    \mathbb{P}(A_{n}^{(i)}) = (1 - p_{n})^{n-1} \tag{3.2}
+  \end{align*}
+  Note that, $X = \sum_{i = 1}^{n}  X_{n}^{(i)}$. By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(X) &= \sum_{i = 1}^{n} \mathbb{E}(X_{n}^{(i)}) \\
+                  &= \sum_{i = 1}^{n} \mathbb{P}(A_{n}^{(i)}) \\
+                  &= n (1 - p_{n})^{n - 1}
+  \end{align*}
+  Now, we want to show that $\lim_{n \to \infty} \mathbb{E}(X_{n}) = 0$. From the equation of $\mathbb{E}(X_{n})$ given above, as $n$ goes to infinity, we recognise that $n (1 - p_{n})^{n - 1}$ is no different from $n (1 - p_{n})^{n}$; hence,
+  \begin{align*}
+    \lim_{n \to \infty} \mathbb{E}(X_{n}) = \lim_{n \to \infty} n (1 - p_{n})^{n}
+  \end{align*}
+  Recall that $\left( 1 - \frac{1}{x} \right)^{-x} > e$ and $p_{n} = \frac{c_{n} \log(n)}{n}$, we have
+  \begin{align*}
+    (1 - p_{n})^{n} &= \left[ \left( 1 - \frac{1}{\frac{n}{c_{n} \log(n)}} \right)^{-\frac{n}{c_{n} \log(n)}} \right]^{-c_{n} \log(n)} \\
+                    &\leq e^{-c_{n} \log(n)} \\
+                    &\leq n^{-c_{n}}
+  \end{align*}
+  Therefore, the equation $(3.2)$ is equivalent to
+  \begin{align*}
+    \lim_{n \to \infty} \mathbb{E}(X_{n}) \leq \lim_{n \to \infty} n^{1 - c_{n}} \tag{3.3}
+  \end{align*}
+  Recall that $c_{n} \gg 1$, we have
+  \begin{align*}
+    \lim_{n \to \infty} \frac{1}{c_{n}} = 0 \Leftrightarrow \lim_{n \to \infty} c_{n} = \infty \tag{3.4}
+  \end{align*}
+  Due to the equation $(3.4)$, the equation $(3.3)$ is equivalent to
+  \begin{align*}
+    \lim_{n \to \infty} \mathbb{E}(X_{n}) \leq 0 \tag{3.5}
+  \end{align*}
+  It is worth to note that, $X_{n}$ only takes non-negative integers. This means that the lower bound of $\mathbb{E}(X_{n})$ is $0$. Combine this with the equation $(3.5)$, we have 
+  \begin{align*}
+    \lim_{n \to \infty} \mathbb{E}(X_{n}) = 0
+  \end{align*}
+  Hence, $\mathbb{E}(X_{n}) = o(1)$. It follows from the Corollary $6.3$ in the lecture that the equation $(3.1)$ is satisfied, and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  In the Erdős-Renyi model $G(n, p_{n})$ let $p_{n} = \frac{1}{n}$. Show: If $n$ is big enough, there is a constant $c > 0$, such that the expected number of vertices of degree $\geq 3$ (i.e. the vertex lies in $\geq 3$ edges), is at least $cn$.
+\end{problem}
+\begin{proof}
+  Recall that $G(n, p_{n})$ is the discrete probability space $(\Omega_{n}, \mathbb{P})$ where the sample space $\Omega_{n}$ is the of all undirected graphs $G = ([n], E)$ while the probability measure $\mathbb{P}(G) = p_{n}^{|E|}(1 - p_{n})^{\binom{n}{2} - |E|}$ for any $G \in \Omega_{n}$.
+
+  Let $X_{n} : \Omega_{n} \to \mathbb{N}$ be the random variable that assigns to any graph $G \in \Omega_{n}$ the number of vertices of degree $\geq 3$ in $G$. For a graph $G \in \Omega_{n}$ and an arbitrary vertex numbered $i$ in $G$, let the random variable $X_{n}^{(i)} : \Omega_{n} \to \mathbb{N}$ defined by the following rule
+  \begin{align*}
+    X_{n}^{(i)}(G) = 
+    \begin{cases}
+      1 \text{ if degree of the vertex numbered $i$ in $G$ is $\geq 3$} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  Next, we define the indicator variable $X_{n}^{(i)} = 1_{A_{n}^{(i)}}$ of event
+  \begin{align*}
+    A_{n}^{(i)} = \{ G = ([n], E) \ | \ \text{ degree of the vertex numbered $i$ in $G$ is $\geq 3$}\} 
+  \end{align*}
+  then $\mathbb{E}(X_{n}^{(i)}) = \mathbb{E}(1_{A_{n}^{(i)}}) = \mathbb{P}(A_{n}^{(i)})$. For any vertex numbered $i$ in $G$, as the set $A_{n}^{(i)}$ is vague, its probability can be calculated as follows
+  \begin{align*}
+    \mathbb{P}(A_{n}^{(i)}) &= 1 - \mathbb{P}(\{G = ([n], E) \ | \ \text{ degree of the vertex numbered $i$ in $G$ is $< 3$}\}) \\
+                            &= 1 - (\mathbb{P}(X_{n} = 0) + \mathbb{P}(X_{n} = 1) + \mathbb{P}(X_{n} = 2)) \tag{4.1}
+  \end{align*}
+  The probability of the random variable $X_{n}$ when its value is $0,1,2$ can be calculated as follows:
+  \begin{itemize}
+    \item In order to calculate $\mathbb{P}(X_{n} = 0)$, we want to find the probability of the following set
+      \begin{align*}
+        \mathbb{P}(\{G = ([n],E) \ | \ \text{ degree of the vertex numbered $i$ in $G$ is $0$}\})
+      \end{align*}
+      The set in such probability is the set of graphs $G \in \Omega_{n}$ where none of $n-1$ possible edges between the vertex numbered $i$ and any other vertices in $G$ can exist. Moreover, the probability of choosing a graph $G \in \Omega_{n}$ that does not have a specific edge is $1 - p_{n}$; hence,
+      \begin{align*}
+        \mathbb{P}(X_{n} = 0) = (1-p_{n})^{n-1} \tag{4.2}
+      \end{align*}
+    \item In order to calculate $\mathbb{P}(X_{n} = 1)$, we want to find the probability of the following set
+      \begin{align*}
+        \mathbb{P}(\{G = ([n],E) \ | \ \text{ degree of the vertex numbered $i$ in $G$ is $1$}\})
+      \end{align*}
+      The set in such probability is the set of graphs $G \in \Omega_{n}$ where there is only one edge between the vertex numbered $i$ and another vertex in $G$. There are $\binom{n-1}{1}$ ways to select a vertex in $G$ that are not numbered $i$ to be the one to which we draw an edge from the vertex numbered $i$. In each selection, the possibility to choose a graph $G \in \Omega_{n}$ that has a specific edge between selected vertex and the vertex numbered $i$ in $G$ is $p_{n}$. Moreover, in each selection, none of $n-2$ possible edges between the vertex numbered $i$ and any other vertices in $G$ that are not selected can exist. Therefore,
+      \begin{align*}
+        \mathbb{P}(X_{n} = 1) = (n-1) p_{n} (1- p_{n})^{n-2} \tag{4.3}
+      \end{align*}
+    \item Based on the idea for calculating $\mathbb{P}(X_{n} = 1)$ described above, $\mathbb{P}(X_{n} = 2)$ can be calculated in the similar way; hence, we have
+      \begin{align*}
+        \mathbb{P}(X_{n} = 2) = \binom{n - 1}{2} p_{n}^{2} (1 - p_{n})^{n - 3} \tag{4.4}
+      \end{align*}
+  \end{itemize}
+  Based on the following equations: $(4.2), (4.3), (4.4)$, the equation $(4.1)$ is equivalent to
+  \begin{align*}
+    \mathbb{P}(A_{n}^{(i)}) &= 1 - (1 - p_{n})^{n-1} - (n-1) p_{n} (1 - p_{n})^{n-2} - \binom{n - 1}{2} p_{n}^{2} (1 - p_{n})^{n-3} \tag{4.5}
+  \end{align*}
+  Note that $X = \sum_{i = 1}^{n} X_{n}^{(i)}$. By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(X) &= \sum_{i = 1}^{n} \mathbb{E}(X_{n}^{(i)}) \\
+                  &= \sum_{i = 1}^{n} \mathbb{P}(A_{n}^{(i)}) \\
+                  &= n \mathbb{P}(A_{n}^{(i)})
+  \end{align*}
+  That is, when $n$ is large enough and we choose a constant $c$ such that $0 < c \leq \mathbb{P}(A_{n}^{(i)})$, whose value is described by the equation $(4.5)$, then
+  \begin{align*}
+    \mathbb{E}(X) \geq cn
+  \end{align*}
+  and the proof is finished.
+\end{proof}

@@ -1,0 +1,111 @@
+\begin{problem}
+  Consider Erdős-Rényi model $G(n,p)$. Using the Janson-inequality show that the probability that a graph is triangle free is bounded from above by $e^{-\mu + \delta/2}$ for $\mu = \binom{n}{3} p^{3}$ and $\Delta = 3 \binom{n}{3} (n-3) p^{5}$.
+\end{problem}
+\begin{proof}
+  It is known that the Erdős-Rényi model $G(n,p)$ is used for randomly generating undirected graph of $n$ vertices where the probability to choose an edge is $p$. Let $\Omega$ be the set of all possible edges between $n$ vertices. In this problem, we consider the discrete probability space $(2^{\Omega}, \mathbb{P})$ where the probability measure $\mathbb{P}(E) = \prod\limits_{e \in E}p\prod\limits_{e \notin E}(1-p)$ for any set of edges $E \in 2^{\Omega}$. Consider the events $A_{1}, \ldots, A_{\binom{n}{3}} \subseteq \Omega$, which are $3$-elements sets where each edge-set $A_{i}$ forms a triangle. For $1 \leq i \leq \binom{n}{3}$, let $B_{i}=A_{i}$ and $X_{i}$ be the indicator random variable for $B_{i}$, and $X = X_{1} + X_{2} + \ldots + X_{\binom{n}{3}}$. It is obvious that $\mathbb{P}(B_{i}) = p^{3}$ as three edges in the edge-set $B_{i}$ must appear to form a triangle, and the edges are chosen independently with probability $p$ in the random graph model $G(n,p)$. By linearity of expectation, we have
+  \begin{align*}
+    \mu = \mathbb{E}(X) = \mathbb{E}(\sum\limits_{i=1}^{\binom{n}{3}} X_{i})  = \sum\limits_{i=1}^{\binom{n}{3}} \mathbb{E}(X_{i}) = \sum\limits_{i=1}^{\binom{n}{3}} \mathbb{P}(B_{i}) = \binom{n}{3}p^{3}
+  \end{align*}
+  Next, we want to calculate
+  \begin{align*}
+    \Delta = \sum\limits_{\substack{A_{i} \cap A_{j} \neq \emptyset \\ 1 \leq i,j \leq \binom{n}{3}, i \neq j}} \mathbb{P}(B_{i} \cap B_{j}) \tag{1.1}
+  \end{align*}
+  For any $i \neq j$ where $1 \le i,j \leq \binom{n}{3}$, it is obvious that $|B_{i} \cap B_{j}| = 1$, as it is impossible to find $B_{i}$ and $B_{j}$ such that $|B_{i} \cap B_{j}| = 2$, and $B_{i} = B_{j}$ when $|B_{i} \cap B_{j}| = 3$. Such constraint implies that $B_{i}$ and $B_{j}$ have one edge in common, and thus $\mathbb{P}(B_{i} \cap B_{j}) = p^{5}$, as $B_{i}$ and $B_{j}$ are triangles having one common edge. That is, it remains to find the number of $i,j$, where $1 \leq i,j \leq \binom{n}{3}$ such that $i \neq j$, and $A_{i} \neq A_{j}$, in order to find $\Delta$ by the equation $(1.1)$. For any $i$ where $1 \leq i \leq \binom{n}{3}$, the procedure for constructing an $A_{j}$ satisfying the constraint described above can be described as follows. First of all, we can select one of three edges in $A_{i}$ as the common edge between $A_{i}$ and $A_{j}$. For each selection, we want to choose a vertex that is not in $A_{i}$ and draw an edge between this vertex and the endpoints of the common edge, and this indeed form a new triangle, which is $A_{j}$. That is, for any $i$ where $1 \leq i \leq \binom{n}{3}$, there are $3(n-3)$ ways to find $A_{j}$ satisfying the constraint described above. By the equation $(1.1)$, we have
+  \begin{align*}
+    \Delta = 3 \binom{n}{3} (n-3) p^{5}
+  \end{align*}
+  With $B_{1}, \ldots, B_{\binom{n}{3}}, \mathbb{P}, X, \mu, \Delta$ described above, by the Janson Inequality, we have
+  \begin{align*}
+    \mathbb{P} \Big(\bigcap_{i=1}^{\binom{n}{3}} (2^{\Omega} \setminus B_{i}) \Big) = \mathbb{P}(X=0) \leq e^{-\mu + \Delta/2}
+  \end{align*}
+  Since $\bigcap\limits_{i=1}^{\binom{n}{3}} (2^{\Omega} \setminus B_{i})$ is the event where the graph does not have any cycle, then the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Consider the Erdős-Rényi model $G(n,p)$ of random graphs. 
+
+  Using the results about correlation inequalities show that
+  \begin{align*}
+    \mathbb{P}(G(n,p) \text{ is triangle free}) \geq (1-p^{3})^{\binom{n}{3}}
+  \end{align*}
+\end{problem}
+\begin{proof}
+  It is known that the Erdős-Rényi model $G(n,p)$ is used for randomly generating undirected graph of $n$ vertices where the probability to choose an edge is $p$. Let $r = \binom{n}{2}$, suppose that all possible edges between $n$ vertices are numbered distinctly by using numbers in $[r]$. In this problem, we consider the discrete probability space $(2^{[r]}, \mathbb{P})$ where the probability measure $\mathbb{P}(E) = p^{E}(1-p)^{r-E}$ for any edge $E \in 2^{[r]}$. Consider the events $A_{1}, \ldots, A_{\binom{n}{3}} \subseteq [r]$, which are $3$-elements sets where each edge-set $A_{i}$ does not form a triangle. It it obvious that $\mathbb{P}(A_{i}) = 1 - p^{3}$. For $i$ where $1 \leq i \leq \binom{n}{3}$, let $\mathcal{A}_{i} = A_{i}$. It is obvious that $\mathbb{P} \Big( \bigcap\limits_{i=1}^{\binom{n}{3}} \mathcal{A}_{i} \Big)$ is the probability that $G(n,p)$ is triangle-free. Based on the Corollary $12.8$ in the lecture, we have
+  \begin{align*}
+    \mathbb{P} \Big(\bigcap\limits_{i=1}^{\binom{n}{3}} \mathcal{A}_{i} \Big) \geq \prod\limits_{i=1}^{\binom{n}{3}} \mathbb{P}(\mathcal{A}_{i}) = (1-p^{3})^{\binom{n}{3}}
+  \end{align*}
+  and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Let $B_{1}, \ldots, B_{r}, \mathbb{P}, X, \mu$, and $\Delta$ be like in the setup of the Janson-inequality. For every $T \subset [r]$, let
+  \begin{align*}
+    & X_{T} = \sum\limits_{i \in T}X_{i} \\
+    & \mu_{T} = \mathbb{E}(X_{T}) \\
+    & \Delta_{T} = \sum\limits_{\substack{i,j \in T, i \neq j \\ A_{i} \cap A_{j} \neq \emptyset}} \mathbb{P}(B_{i} \cap B_{j})
+  \end{align*}
+  \begin{enumerate}[label=(\roman*)]
+    \item Show that for every $T \subset [r]$ it holds, that
+      \begin{align*}
+        \mathbb{P}(X=0) \leq e^{-\mu_{T} + \frac{\Delta_{T}}{2}}
+      \end{align*}
+    \item Now choose $T$ randomly by independently including every $i \in [r]$ with probability $q$. Prove that:
+      \begin{align*}
+        \mathbb{E}(-\mu_{T} + \frac{\Delta_{T}}{2})  = -q\mu + \frac{q^{2}\Delta}{2}
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (i): In order to prove this inequality, we simply apply Janson Inequality to $B_{i}$ for $i \in T$, $\mu_{T}$, and $\Delta_{T}$.
+
+  (ii): By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(-\mu_{T} + \frac{\Delta_{T}}{2}) = \mathbb{E}(-\mu_{T}) + \mathbb{E}(\frac{\Delta_{T}}{2}) \tag{3.1}
+  \end{align*}
+  For $i \in [r]$, let $1_{i \in T}$ be the indicator function for the existence of $i$ in $T$. It is obvious that $\mathbb{E}(1_{i \in T})$ is equal to the probability of $i$ is in $T$, which is $q$. That is, we can rewrite $X_{T}$ as follows
+  \begin{align*}
+    X_{T} = \sum\limits_{i \in [r]} 1_{i \in T} X_{i}
+  \end{align*}
+  By linearity of expectation and the fact that $1_{i \in T}$ and $X_{i}$ are independent for $i \in [r]$, we have
+  \begin{align*}
+    \mathbb{E}(-\mu_{T}) &= -\sum\limits_{i \in [r]} \mathbb{E}(1_{i \in T}) \mathbb{E}(X_{i}) \\
+            &= -\sum\limits_{i \in [r]} q \mathbb{E}(X_{i}) \\
+            &= -q \sum\limits_{i \in [r]} \mathbb{E}(X_{i}) \\
+            &= -q \mu \tag{3.2}
+  \end{align*}
+  Similarly, we can rewrite $\Delta_{T}$ as follows
+  \begin{align*}
+    \Delta_{T} &= \sum\limits_{\substack{i,j \in T, i \neq j \\ A_{i} \cap A_{j} \neq \emptyset}} \mathbb{P}(B_{i} \cap B_{j}) \\
+               &= \sum\limits_{\substack{i,j \in [r], i \neq j \\ A_{i} \cap A_{j} \neq \emptyset}} 1_{i \in T} 1_{j \in T} \mathbb{P}(B_{i} \cap B_{j}) 
+  \end{align*}
+  By linearity of expectation and the fact that $1_{i \in T}$, $1_{j \in T}$, and $\mathbb{P}(B_{i} \cap B_{j})$ are independent for $i \in [r]$, we have
+  \begin{align*}
+    \mathbb{E}(\frac{\Delta_{T}}{2}) &= \frac{1}{2} \sum\limits_{\substack{i,j \in [r], i \neq j \\ A_{i} \cap A_{j} \neq \emptyset}} \mathbb{E}(1_{i \in T}) \mathbb{E}(1_{j \in T}) \mathbb{E}\Big(\mathbb{P}(B_{i} \cap B_{j})\Big) \\
+                                     &= \frac{1}{2} \sum\limits_{\substack{i,j \in [r], i \neq j \\ A_{i} \cap A_{j} \neq \emptyset}} q^{2} \mathbb{P}(B_{i} \cap B_{j}) \\
+                                     &= \frac{q^{2}}{2} \sum\limits_{\substack{i,j \in [r], i \neq j \\ A_{i} \cap A_{j} \neq \emptyset}} \mathbb{P}(B_{i} \cap B_{j}) \\
+                                     &= \frac{q^{2} \Delta}{2} \tag{3.4}
+  \end{align*}
+  By the three equalities: $(3.1), (3.2), (3.3)$, the proof is finished.
+\end{proof}
+
+\begin{problem}
+  (Second Janson Inequality) Consider the setup of $(3)$, but now also assume that $\Delta \geq \mu$. Use $(3)$ to prove that:
+  \begin{align*}
+    \mathbb{P}(X=0) \leq e^{\frac{-\mu^{2}}{2\Delta}}
+  \end{align*}
+\end{problem}
+\begin{proof}
+  Based on the previous problem, we have $\mathbb{P}(X=0) \leq e^{-\mu_{T} + \frac{\Delta_{T}}{2}}$ and $\mathbb{E}(-\mu_{T} + \frac{\Delta_{T}}{2}) = -q\mu + \frac{q^{2}\Delta}{2}$. By linearity of expectation, there must exist some choice of $T \in [r]$ such that
+  \begin{align*}
+    -\mu_{T} + \frac{\Delta_{T}}{2} \leq -q\mu + \frac{q^{2}\Delta}{2}
+  \end{align*}
+  and thus
+  \begin{align*}
+    \mathbb{P}(X=0) \leq e^{-q\mu + \frac{q^{2}\Delta}{2}} \tag{4.1}
+  \end{align*}
+  Let $f(q) = \mathbb{E}(-\mu_{T} + \frac{\Delta_{T}}{2}) = -q\mu + \frac{q^{2}\Delta}{2}$. We have $f^{'}(q) = -\mu + q\Delta$. For $q = \frac{\mu}{\Delta}$, then $f^{'}(q)=0$ and $f(q)$ is minimized. Since $\Delta \geq \mu$, then $q = \frac{\mu}{\Delta} \leq 1$, and thus $q = \frac{\mu}{\Delta}$ is valid as $q$ is a probability measure. For such $q$, then the inequality $(4.1)$ is equivalent to
+  \begin{align*}
+    \mathbb{P}(X=0) \leq e^{\frac{-\mu^{2}}{2\Delta}}
+  \end{align*}
+  and the proof is finished.
+\end{proof}

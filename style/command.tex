@@ -1,0 +1,24 @@
+% Redefine the syntax for the symbols for easier use
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\bracket{\{}{\}}
+\DeclarePairedDelimiter{\paren}{\lparen}{\rparen}
+\DeclarePairedDelimiter\sqr{\left[}{\right]}
+\newcommand{\varlnot}{\mathord{\sim}}
+\newcommand\numberthis{\stepcounter{equation}\tag{\theequation}}
+\newenvironment{sqcases}{%
+  \matrix@check\sqcases\env@sqcases
+}{%
+  \endarray\right.%
+}
+\def\env@sqcases{%
+  \let\@ifnextchar\new@ifnextchar
+  \left\lbrack
+  \def\arraystretch{1.2}%
+  \array{@{}l@{\quad}l@{}}%
+}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}

@@ -1,0 +1,155 @@
+\begin{problem}
+  For a graph $G=(V,E)$ let $\omega(G)$ be the biggest number $\ell$, such that $G$ contains a full subgraph $K_{\ell}$. Furthermore let $X_{\ell}(G)$ be the random variable on $G(n, 1/2)$, which assigns to a graph the number of complete subgraphs $K_{\ell}$ of $G$. Proof the following statements
+  \begin{enumerate}[label=(\roman*)]
+    \item 
+      \begin{align*}
+        \mathbb{E}(X_{\ell}) = \binom{n}{\ell} 2^{-\binom{\ell}{2}}
+      \end{align*}
+    \item For every $\varepsilon > 0$: 
+      \begin{align*}
+        \lim\limits_{n \to \infty} \mathbb{P} (\omega \geq (2+\varepsilon) \log n) = 0
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  It is known that $G(n, 1/2)$ is the discrete probability space where the sample space $\Omega_{n}$ is the set of all undirected graphs  $G=([n],E)$ while the probability space is $p_{n}(G) = \frac{1}{2}^{|E|} \frac{1}{2}^{n - |E|}$ for any graph $G \in \Omega_{n}$. 
+
+  Let $S$ be the set of all subsets of vertices in $G$ with cardinality $\ell$. For any $s \in S$, let $G_{s}$ be the induced subgraph of a graph $G \in \Omega_{n}$ whose vertex set is $s$. Next, we define the indicator random variable $X_{\ell}^{(s)} : \Omega_{n} \to \mathbb{N}$ defined by the following rule for any graph $G \in \Omega_{n}$
+  \begin{align*}
+    X_{\ell}^{(s)} = 
+    \begin{cases}
+      1 \text{ if $G_{s}$ is $K_{\ell}$} \\
+      0 \text{ otherwise}
+    \end{cases}
+  \end{align*}
+  That is, it is obvious that $X_{\ell} = \sum\limits_{s \in S} X_{\ell}^{(s)}$. Now, we define the indicator variable $X_{\ell} = 1_{A_{\ell}^{(s)}}$ of the event 
+  \begin{align*}
+    A_{\ell}^{(s)} = \{G \in \Omega_{n} | \text{$G_{s}$ is $K_{\ell}$}\}  
+  \end{align*}
+  then $\mathbb{E}(X_{\ell}^{(s)}) = \mathbb{E}(1_{A_{\ell}^{(s)}}) = \mathbb{P}(A_{\ell}^{(s)})$. Recall that $X_{\ell} = \sum\limits_{s \in S} (X_{\ell}^{(s)})$, by linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(X_{\ell}) = \sum\limits_{s \in S} \mathbb{E}(X_{\ell}^{(s)}) = \sum\limits_{s \in S} \mathbb{P}(A_{\ell}^{(s)}) = |S| \mathbb{P}(A_{\ell}^{(s)}) \tag{1.1}
+  \end{align*}
+  That is, it remains to find $\mathbb{P}(A_{\ell}^{(s)})$ and $|S|$ to calculate $\mathbb{E}(X_{\ell})$. It is known that, for a set $s \in S$, which is a subset of vertices in $G$ with cardinality $\ell$, and a graph $G \in \Omega_{n}$, the graph $G_{s}$ is $K_{\ell}$ when there exists an edge between any pair of distinct vertices from $\ell$ vertices in $s$. That is, such $\binom{\ell}{2}$ edges must be presented in $G$. Moreover, it is known that the probability to choose a graph $G \in \Omega_{n}$ having a specific edge is $\frac{1}{2}$. Therefore, $\mathbb{P}(A_{\ell}^{(s)}) = 2^{-\binom{\ell}{2}}$. Moreover, it is obvious that $|S| = \binom{n}{\ell}$. It follows from the equation $(1.1)$ that 
+  \begin{align*}
+    \mathbb{E}(X_{\ell}) = \binom{n}{\ell} 2^{-\binom{\ell}{2}}
+  \end{align*}
+  and the proof is finished for the statement $(i)$.
+  \vspace{5pt}
+  \hrule
+  In order to prove the statement $(ii)$, we want to show the following equality holds for $\ell \geq (2+\varepsilon) \log n$
+  \begin{align*}
+    \lim\limits_{n \to \infty} \mathbb{P}(X_{\ell} > 0) = 0  \tag{1.2}
+  \end{align*}
+  It is known that this equality automatically holds when $\mathbb{E}(X_{\ell}) = o(1)$, and thus we want to prove this is true for given constraint on $\ell$. Based on the statement $(i)$, we have $\mathbb{E}(X_{\ell}) = \binom{n}{\ell} 2^{-\binom{\ell}{2}}$. Furthermore, we have $\binom{n}{\ell} \leq n^{\ell}$ and $2^{-\binom{\ell}{2}} = 2^{-\frac{\ell(\ell-1)}{2}}$, and thus 
+  \begin{align*}
+    \mathbb{E}(X_{\ell}) &\leq n^{\ell} 2^{-\frac{\ell(\ell-1)}{2}} \\
+                         &\leq n^{\frac{2\ell}{2}} 2^{-\frac{\ell(\ell-1)}{2}} \\
+                         &\leq \left( n^{2} 2^{-(\ell-1)} \right)^{\frac{\ell}{2}} \\
+                         &\leq \left( 2^{2 \log n} 2^{-(\ell-1)} \right)^{\frac{\ell}{2}} \\
+                         &\leq \left( \frac{2^{2 \log n}}{2^{\ell-1}} \right)^{\frac{\ell}{2}} \tag{1.3}
+  \end{align*}
+  For $\ell \geq (2+\varepsilon) \log n$, we have
+  \begin{align*}
+    \frac{2^{2 \log n}}{2^{\ell-1}} &\leq \frac{2^{2 \log n}}{2^{(2+\varepsilon) \log n - 1}} \\
+                                    &\leq 2^{2 \log n - (2+\varepsilon) \log n + 1} \\
+                                    &\leq 2^{1- \varepsilon \log n} \\
+                                    &\leq \frac{2}{n^{\varepsilon}}
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \left( \frac{2^{2 \log n}}{2^{\ell-1}} \right)^{\frac{\ell}{2}} &\leq \left( \frac{2}{n^{\epsilon}} \right)^{\frac{\ell}{2}}
+  \end{align*}
+  It follows from the inequality $(1.3)$ that
+  \begin{align*}
+    \mathbb{E}(X_{\ell}) \leq \left( \frac{2}{n^{\epsilon}} \right)^{\frac{\ell}{2}}
+  \end{align*}
+  and thus
+  \begin{align*}
+    \lim\limits_{n \to \infty} \mathbb{E}(X_{\ell}) \leq \lim\limits_{n \to \infty} \left( \frac{2}{n^{\epsilon}} \right)^{\frac{\ell}{2}} \tag{1.4}
+  \end{align*}
+  When $n$ goes to infinity and $\varepsilon > 0$, it is obvious that $0 < \frac{2}{n^{\varepsilon}} < 1$. Hence, when $n$ goes to infinity, $\varepsilon > 0$, and $\ell \geq (2+\varepsilon) \log n$, we have
+  \begin{align*}
+    \left( \frac{2}{n^{\varepsilon}} \right)^{\frac{\ell}{2}} &\leq \left( \frac{2}{n^{\varepsilon}} \right)^{\frac{(2+\varepsilon) \log n}{2}} \\
+                                                           &\leq \left( 2n^{-\varepsilon} \right)^{\frac{(2+\varepsilon) \log n}{2}} \\
+                                                           &\leq 2^{\frac{(2+\varepsilon) \log n}{2}} n^{-\varepsilon \frac{(2+\varepsilon) \log n}{2}} \\
+                                                           &\leq n^{\frac{2+\varepsilon}{2}} n^{-\varepsilon \frac{(2+\varepsilon) \log n}{2}} \\
+                                                           &\leq n^{\frac{2+\varepsilon}{2} (1 - \varepsilon \log n)} \\
+                                                           &\leq n^{-\frac{2+\varepsilon}{2} (\varepsilon \log n - 1)}
+  \end{align*}
+  It follows from the inequality $(1.4)$ that 
+  \begin{align*}
+    \lim\limits_{n \to \infty} \mathbb{E}(X_{\ell}) &\leq \lim\limits_{n \to \infty} n^{-\frac{2+\varepsilon}{2} (\varepsilon \log n - 1)} = 0
+  \end{align*}
+  This implies that $\mathbb{E}(X_{\ell}) = o(1)$, and thus the inequality $(1.2)$ is satisfied, and the proof is finished.
+  
+
+\end{proof}
+
+\begin{problem}
+  In the settings of exercise $1$, show the following statements:
+  \begin{enumerate}[label=(\roman*)]
+    \item 
+      \begin{align*}
+        \text{Var}(X_{\ell}) \leq \sum_{k=2}^{\ell} \binom{n}{\ell} \binom{\ell}{k} \binom{n-\ell}{\ell-k} 2^{-2 \binom{\ell}{2} + \binom{k}{2}}
+      \end{align*}
+    \item For every $\varepsilon > 0$:
+      \begin{align*}
+        \lim\limits_{n \to \infty} \mathbb{P}(\omega  \geq (2-\varepsilon) \log n) = 1
+      \end{align*}
+      You may use without proof:
+      \begin{align*}
+        \lim\limits_{n \to \infty} \sum_{k=2}^{\ell} \frac{\binom{\ell}{k} \binom{n-\ell}{\ell-k} 2^{\binom{k}{2}}}{\binom{n}{\ell}} = 0
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  It is known that
+  \begin{align*}
+    \text{Var}(X_{\ell}) = \mathbb{E}(X_{\ell}^{2}) - \mathbb{E}(X_{\ell})^{2}
+  \end{align*}
+  Recall from the Problem $1$ that $X_{\ell} = \sum\limits_{s \in S}X_{\ell}^{(s)}$ where $S$ is the set of all subsets in vertices of $G$ with cardinality $\ell$. Therefore,
+  \begin{align*}
+    \text{Var}(X_{\ell}) &= \mathbb{E}\left( \left(\sum\limits_{s \in S} X_{\ell}^{(s)}\right)^{2} \right) - \mathbb{E} \left( \sum\limits_{s \in S} X_{\ell}^{(s)} \right)^{2} \\
+                       &= \mathbb{E} \left( \sum\limits_{s \in S} X_{\ell}^{(s)} \sum\limits_{s^{'} \in S} X_{\ell}^{(s^{'})} \right) - \sum\limits_{s \in S} X_{\ell}^{(s)} \sum\limits_{s^{'} \in S} X_{\ell}^{(s^{'})} \\
+                       &= \sum\limits_{s, s^{'} \in S} \left( \mathbb{E}(X_{\ell}^{(s)} X_{\ell}^{(s^{'})}) - \mathbb{E}(X_{\ell}^{(s)}) \mathbb{E}(X_{\ell}^{(s^{'})}) \right) \tag{2.1}
+  \end{align*}
+  Recall that $\mathbb{E}(X_{\ell}^{(s)}) = \mathbb{P}(A_{\ell}^{(s)})$ where $A_{\ell}^{(s)} = \{G \in \Omega_{n} | \text{ $G_{s}$ is $K_{\ell}$}\}$, the equation $(2.1)$ is equivalent to
+  \begin{align*}
+    \text{Var}(X_{\ell})  = \sum\limits_{s, s^{'} \in S} \left( \mathbb{P}(A_{\ell}^{(s)} \& A_{\ell}^{(s^{'})}) - \mathbb{P}(A_{\ell}^{(s)}) \mathbb{P}(A_{\ell}^{(s^{'})}) \right) \tag{2.2}
+  \end{align*}
+  If $s \cap s^{'} = \emptyset$, then the events $A_{s}$ and $A_{s^{'}}$ are independent. Moreover, this also holds when $|s \cap s^{'}|=1$ since they do not share any common edges. Therefore, if $|s \cap s^{'}| \leq 1$, then $\mathbb{P}(A_{\ell}^{(s)} \& A_{\ell}^{(s^{'})}) = \mathbb{P}(A_{\ell}^{(s)}) \mathbb{P}(A_{\ell}^{(s^{'})})$, and thus $\mathbb{P}(A_{\ell}^{(s)} \& A_{\ell}^{(s^{'})})$ and $\mathbb{P}(A_{\ell}^{(s)}) \mathbb{P}(A_{\ell}^{(s^{'})})$ cancel each other in the equation $(2.2)$ when $|s \cap s^{'}| \leq 1$. By this observation, the equation $(2.2)$ is equivalent to
+  \begin{align*}
+    \text{Var}(X_{\ell}) \leq \sum\limits_{s,s^{'} \in S, |s \cap s^{'}| \geq 2} \mathbb{P} (A_{\ell}^{(s)} \& A_{\ell}^{(s^{'})}) \tag{2.3}
+  \end{align*}
+  For arbitrary two sets $s, s^{'} \in S$ such that $|s \cap s^{'}| = k$ where $2 \leq k \leq \ell$, and a graph $G \in \Omega_{n}$, the graphs $G_{s}$ and $G_{s^{'}}$ are $K_{\ell}$ only when there are edges between any pair of distinct vertices in $G_{s}$, and $G_{s^{'}}$ respectively. That is, such $2 \binom{\ell}{2}$ edges must be presented in $G$. It is worth to notice that $s$ and $s^{'}$ shares $k$ common vertices, and thus there are $\binom{k}{2}$ common edges between $G_{s}$ and $G_{s^{'}}$ that are counted twice in $2 \binom{\ell}{2}$. Therefore, we only need $2\binom{\ell}{2} - \binom{k}{2}$ edges in $G$ that are incident to vertices in $s$ and $s^{'}$ so that $G_{s}$ and $G_{s^{'}}$ are $K_{\ell}$. Recall that the probability to choose a graph $G \in \Omega_{n}$ having a specific edge is $1/2$. Therefore, the probability to choose a graph $G \in \Omega_{n}$ such that $G_{s}$ and $G_{s^{'}}$ are $K_{\ell}$ when $|s \cap s^{'}| = k$ is $2^{-2\binom{\ell}{2} + \binom{k}{2}}$
+
+  Now, we want to calculate the number of ways to pick $s,s^{'} \in S$ such that $|s \cap s^{'}| = k$ for $2 \leq k \leq \ell$. Firstly, we want to arbitrarily pick $s$, which is a subset of vertices in $G$ with cardinality $\ell$, and thus there are $\binom{n}{\ell}$ ways to do so. For each set $s$, we can pick any $k$ vertices in $s$ that we want $s^{'}$ to share with, and there are $\binom{\ell}{k}$ ways to do this. For each selection of $k$ vertices in $s$, we now want to construct $s^{'}$ by including these $k$ vertices, as we want $|s \cap s^{'}| = k$, and pick $\ell-k$ vertices left from the vertices of $G$ that are not in $s$, and thus there are $\binom{n-\ell}{\ell-k}$ ways to construct $s^{'}$. Therefore, there are $\binom{n}{\ell} \binom{\ell}{k} \binom{n-\ell}{\ell-k}$ ways to pick $s,s^{'} \in S$ such that $|s \cap s^{'}| = k$ for $2 \leq k \leq \ell$.
+
+
+  Based on the observations described above, by the equation $(2.3)$, we have
+  \begin{align*}
+    \text{Var}(X_{\ell}) \leq \sum_{k=2}^{\ell} \binom{n}{\ell} \binom{\ell}{k} \binom{n-\ell}{\ell-k} 2^{-2\binom{\ell}{2} + \binom{k}{2}}
+  \end{align*}
+  \vspace{5pt}
+  \hrule
+  In order to prove the statement $(ii)$, we want to show the following equality holds for $\ell \geq (2-\epsilon) \log n$
+  \begin{align*}
+    \lim_{n \to \infty} \mathbb{P}(X_{\ell} = 0) = 0 \tag{2.4}
+  \end{align*}
+  It is known that 
+  \begin{align*}
+    \mathbb{P}(X_{\ell} = 0) \leq \frac{\text{Var}(X_{\ell})}{\mathbb{E}(X_{\ell}^{2})} \tag{2.5}
+  \end{align*}
+  By the statement $(i)$ of the first and this problem, we have
+  \begin{align*}
+    \frac{\text{Var}(X_{\ell})}{\mathbb{E}(X_{\ell})^{2}} &\leq \frac{\sum_{k=2}^{\ell} \binom{n}{\ell} \binom{\ell}{k} \binom{n-\ell}{\ell-k} 2^{-2\binom{\ell}{2} + \binom{k}{2}}}{\binom{n}{\ell}^{2} 2^{-2\binom{\ell}{2}}} \\
+                                                          &\leq \frac{\binom{n}{\ell} 2^{-2\binom{\ell}{2}} \sum_{k=2}^{\ell} \binom{\ell}{k} \binom{n-\ell}{\ell-k} 2^{ \binom{k}{2}}}{\binom{n}{\ell}^{2} 2^{-2\binom{\ell}{2}}} \\
+                                                          &\leq \sum_{k=2}^{\ell} \frac{\binom{\ell}{k} \binom{n-\ell}{2} 2^{\binom{k}{2}}}{\binom{n}{\ell}} \tag{2.6}
+  \end{align*}
+  By the two equalities: $(2.5)$ and $(2.6)$, we have
+  \begin{align*}
+  \lim\limits_{n \to \infty} \mathbb{P}(X_{\ell} = 0) \leq \lim\limits_{n \to \infty} \sum\limits_{k=2}^{\ell} \frac{\binom{\ell}{k} \binom{n-\ell}{\ell-k} 2^{\binom{k}{2}}}{\binom{n}{\ell}} = 0
+  \end{align*}
+  Therefore, the equality $(2.4)$ holds, and the proof is finished.
+\end{proof}

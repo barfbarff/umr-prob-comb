@@ -1,0 +1,86 @@
+\begin{problem}
+    Let $R(\ell,k)$ be the Ramsey number as it was defined the lecture.
+    \begin{enumerate}
+        \item Show that if $\ell,k \geq 2$, then $R(\ell,k) \leq R(\ell-1,k) + R(\ell,k-1)$.
+        \item Show that $R(\ell,k) < \infty$ for $\ell,k \geq 1$.
+    \end{enumerate}
+\end{problem}
+\begin{proof}
+    Let $m = R(\ell,k)$. For easier intepreration, let $\ell$ and $k$ be the number of vertices of induced subgraphs of $K_{m}$ that are monochromatic where all of their edges are coloured red and blue, respectively.
+    \begin{enumerate}
+        \item Let $n = R(\ell-1,k) + R(\ell,k-1)$. We want to show that $K_{n}$ has either an induced subgraph of $K_{n}$ on $\ell$ vertices in which all edges are coloured red or an induced subgraph of $K_{n}$ on $k$ vertices in which all edges are coloured blue. Next, fix a vertex $v \in K_{n}$, and let 
+        \begin{itemize}
+            \item $A$ be the set of all vertices in $K_{n}$ that are adjacent to $v$ via a red edge.
+            \item $B$ be the set of all vectices in $K_{n}$ that are adjacent to $v$ via a blue edge.
+        \end{itemize}
+        It is obvious that 
+        \begin{align*}
+            |A| + |B| = R(\ell-1,k) + R(\ell,k-1) - 1 \tag{1.1}
+        \end{align*}
+        Therefore, either $|A| \geq R(\ell-1,k)$ or $|B| \geq R(k,\ell-1)$. Otherwise, we have the left-hand side of the equation $(1.1)$ less than the right-hand side of the equation $(1.1)$.
+
+        We firstly consider the case where $|A| \geq R(\ell-1,k)$. First of all, it is obvious that the induced subgraph of $K_{n}$ on vertices in $A$, which is denoted by $G_{A}$, must have one of the following properties 
+        \begin{itemize}
+            \item An induced subgraph of $G_{A}$ on $\ell-1$ vertices in which all edges are coloured red. Recall that the vertices in $A$ are adjacent to $v$ via a red edge. Therefore, the induced subgraph of $K_{n}$ on vertices in $A \cup \{v\}$ must be an induced subgraph of $K_{n}$ on $\ell$ vertices in which all edges are coloured red. 
+            \item An induced subgraph of $G_{A}$ on $k$ vertices in which all edges are coloured blue. This is also an induced subgraph of $K_{n}$ on $k$ vertices in which all edges are coloured blue. That is, the proof is finished
+        \end{itemize}
+        
+        Similarly, we can reason that when $|B| \geq R(k,\ell-1)$ then $K_{n}$ has either an induced subgraph of $K_{n}$ on $\ell$ vertices in which all edges are coloured red or an induced subgraph $K_{n}$ on $k$ vertices in which all edges are coloured blue. Therefore, the proof is finished.
+
+        \item The claim can be proved by using induction on $\ell+k$. That is, we firstly prove that the claim holds for the base case $\ell+k=4$ in which we have to show that $R(2,2) < \infty$. It is obvious that any 2-coloring on $K_{2}$ always results in an induced subgraph of $K_{2}$ on 2 vertices in which all edges are coloured either red or blue. Therefore, $R(2,2)=2$, and thus the claim holds for the base case. Now, suppose inductively that $R(\ell,k) < \infty$ when $\ell+k=n-1$, we want to show that $R(\ell,k) < \infty$ when $\ell+k=n$. Recall that, if $\ell,k \geq 2$, we have
+        \begin{align*}
+            R(\ell,k) \leq R(\ell-1,k) + R(\ell,k-1)
+        \end{align*}
+        For $\ell+k=n$, both $R(\ell-1,k)$ and $R(\ell,k-1)$ must be finite due to the induction hypothesis. It follows from the inequality above that $R(\ell,k)$ must be finite, and thus $R(\ell,k) < \infty$.
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+Let $n \geq 4$ and $\mathcal{A}$ be a set of $n$-element subsets of $\mathbb{N}$ satisfying $\# \mathcal{A} \leq \frac{4^{n-1}}{3^{n}}$. Show via a probabilistic argument: There is a map $f : \mathbb{N} \rightarrow [4]$ such that $A \in \mathcal{A} \ \# f(A) = 4$.
+\end{problem}
+\begin{proof}
+Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of functions $f : \mathbb{N} \to [4]$ and the probability measure $\mathbb{P}$ is given by independent choices in $[4]$ that are uniformly distributed. Consider an arbitrary set $A \in \mathcal{A}$, let $\Omega_{A}$ be the set of all functions $f : \mathbb{N} \to [4]$ such that $\# f(A)=4$, or $\# f(A) < 4$ since $|[4]| = 4$. This implies that any function $f \in \Omega_{A}$ must have an element $i \in [4]$ such that $f(a) \neq i$ for any $a \in A$. Consider any element $i \in [4]$, the probability of functions $f \in \Omega$ such that $f(a) \neq i$ for any $a \in A$ is $\left( \frac{3}{4} \right)^{n}$. Additionally, there are $\binom{4}{1}$ ways to pick an element $i \in [4]$. Therefore,
+\begin{align*}
+\mathbb{P}(\Omega_{A}) = \binom{4}{1} \left( \frac{3}{4} \right)^{n} \tag{2.1}
+\end{align*}
+Furthermore, we have
+\begin{align*}
+\mathbb{P}\left( \bigcup_{A \in \mathcal{A}} \Omega_{A} \right) \leq \sum_{A \in \mathcal{A}} \mathbb{P}(\Omega_{A}) \tag{2.2}
+\end{align*}
+It follows from $\#A \leq  \frac{4^{n-1}}{3^{n}}$ and $(2.1)$ that
+\begin{align*}
+\sum_{A \in \mathcal{A}} \mathbb{P}(\Omega_{A}) &< \frac{4^{n-1}}{3^{n}} \binom{4}{1} \left( \frac{3}{4} \right)^{n} \\
+&< \frac{4^{n}}{4.3^{n}} \frac{4!}{3!} \frac{3^{n}}{4^{n}}\\
+&< 1 \tag{2.3}
+\end{align*}
+Due to $(2.2)$ and $(2.3)$, we have
+\begin{align*}
+\mathbb{P}\left( \bigcup_{A \in \mathcal{A}} \Omega_{A} \right) < 1
+\end{align*}
+This implies that not every function $f \in \Omega$ has the property $\# f(A) < 4$ for at least one $A \in \mathcal{A}$, and thus there must exist a map $f : \mathbb{N} \to [4]$ such that $\# f(A)=4$ for any $A \in \mathcal{A}$.
+\end{proof}
+
+\begin{problem}
+Let $n \geq 2$ and $\mathcal{A}$ be a set of $n$-element subsets of $\mathbb{N}$ with $\# A < 2^{n-1}$. Show that there is a map $f : \mathbb{N} \to [2]$ such that there is no set $A \in \mathcal{A}$ with $\# f(A)=1$.
+\end{problem}
+\begin{proof}
+Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of funtions $f: \mathbb{N} \to [2]$ and the probability measure $\mathbb{P}$ is given by the independent choices in $[2]$ that are uniformly distributed. Consider an arbitrary set $A \in \mathcal{A}$, let $\Omega_{A}$ be the set of all functions $f: \mathbb{N} \to [2]$ such that $\# f(A) = 1$. This implies that any function $f \in \Omega_{A}$ must have an element $i \in [2]$ such that $f(a) \neq i$ for any $a \in A$. Consider any element $i \in [2]$, the probability of functions $f \in \Omega$ such that $f(a) \neq i$ for any $a \in A$ is $\left( \frac{1}{2} \right)^{n}$. Additionally, there are $\binom{2}{1}$ ways to pick an element $ i\in [2]$. Therefore,
+\begin{align*}
+    \mathbb{P}(\Omega_{A}) = \binom{2}{1} \left( \frac{1}{2} \right)^{n} \tag{3.1}
+\end{align*}
+Furthermore, we have 
+\begin{align*} 
+    \mathbb{P}\left( \bigcup_{A \in \mathcal{A}} \Omega_{A} \right) \leq \sum_{A \in \mathcal{A}} \mathbb{P}(\Omega_{A}) \tag{3.2}
+\end{align*}
+It follows from $\# A < 2^{n-1}$ and $(3.1)$ that
+\begin{align*}
+    \sum_{A \in \mathcal{A}} \mathbb{P}(\Omega_{A}) &< 2^{n-1} \binom{2}{1} \left( \frac{1}{2} \right)^{n} \\
+    &< \frac{2^{n}}{2} \frac{2!}{1!} \frac{1}{2^{n}} \\
+    &< 1 \tag{3.3}
+\end{align*}
+Due to $(3.2)$ and $(3.3)$, we have
+\begin{align*}
+    \mathbb{P}\left( \bigcup_{A \in \mathcal{A}} \Omega_{A} \right) < 1
+\end{align*}
+This implies that not every function $f \in \Omega$ has the property $\# f(A) = 1$ for at least one $A \in \mathcal{A}$, and thus there must exist a function $f : \mathbb{N} \to [2]$ such that $\# f(A) = 2$ for any $A \in \mathcal{A}$. Therefore, there must exist a map $f : \mathbb{N} \to [2]$ such that there is no set $A \in \mathcal{A}$ with $\# f(A) = 1$.
+\end{proof}

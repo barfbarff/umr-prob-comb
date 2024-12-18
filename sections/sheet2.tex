@@ -1,0 +1,168 @@
+\begin{problem}
+  Let $n \geq 2$ and $\mathcal{A}$ a set of $n$-element subsets of $\mathbb{N}$ with $\#A < 4^{n-1}$. Show: There is a map $f : \mathbb{N} \to [4]$ with $\# f(A) \geq 2$ for all $A \in \mathcal{A}$. 
+\end{problem}
+\begin{proof}
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega$ is the set of all functions $f : \mathbb{N} \to [4]$ and the probability measure $\mathbb{P}$ is given by independent choices in $[4]$ that are uniformly distributed. Fixed a set $A \in \mathcal{A}$, let
+  \begin{align*}
+    \Omega_{A} = \{f \in \Omega \ | \ \# f(A)=1\}   
+  \end{align*}
+  This implies that any function $f \in \Omega_{A}$ must have an element $i \in [4]$ such that $f(a)=i$ for any $a \in A$. Consider any element in $[4]$, the probability of functions $f \in \Omega$ such that $f(a)=i$ for any $a \in A$ is $(\frac{1}{4})^{n}$. Additionally, there are $\binom{4}{1}$ ways to pick an element $i \in [4]$. Therefore,
+  \begin{align*}
+    \mathbb{P}(\Omega_{A}) &= \binom{4}{1} \left( \frac{1}{4} \right)^{n} \\
+                           &= \frac{1}{4^{n-1}} \tag{1.1}
+  \end{align*}
+  Furthermore, we have
+  \begin{align*}
+    \mathbb{P}(\bigcup_{A \in \mathcal{A}} \Omega_{A}) \leq \sum_{A \in \mathcal{A}} \mathbb{P}(\Omega_{A}) \tag{1.2}
+  \end{align*}
+  It follows from $\#A < 4^{n-1}$ and the equation $(1.1)$ that
+  \begin{align*}
+    \sum_{A \in \mathcal{A}} \mathbb{P}(\Omega_{A}) &< 4^{n-1} \frac{1}{4^{n-1}} \\
+                                                    &< 1 \tag{1.3}
+  \end{align*}
+  Due to the two inequalities $(1.2)$ and $(1.3)$, we have
+  \begin{align*}
+    \mathbb{P}(\bigcup_{A \in \mathcal{A}} \Omega_{A}) < 1
+  \end{align*}
+  This implies that not every function $f \in \Omega$ has the property where $\#f(A)=1$ for at least one $A \in \mathcal{A}$. Therefore, there must exist a map $f : \mathbb{N} \to [4]$ such that $\# f(A) \geq 2$ for all $A \in \mathcal{A}$.
+\end{proof}
+
+\begin{problem}
+  Let $G=(V,E)$ be an undirected graph. Show via a probabilistic argument: There is a subset $E^{'} \subseteq E$ such that $\# E^{'} \geq \#E/2$ and the subgraph $G^{'} \coloneqq (V,E^{'})$ is bipartite.
+\end{problem}
+\begin{proof}
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where the sample space $\Omega=2^{V}$ and the probability measure $\mathbb{P}(w) = \frac{1}{2^{|V|}}$ for any $w \in \Sigma$. Next, define the random variable $X: \Omega \to \mathbb{R}$ that maps any subset of vertices $w \in \Omega$ to number of edges in $G$ that are incident to only one vertex in $w$. Additionally, define the random variable $X_{e}: \Omega \to \mathbb{R}$ defined by the following rule for any $w \in \Omega$
+  \begin{align*}
+    X_{e}(w) = 
+    \begin{cases}
+      1 \ \text{if $e$ is incident to only one vertex in $w$} \\
+      0 \ \text{otherwise}
+    \end{cases}
+  \end{align*}
+  Now, define the indicator variable $X_{e} = 1_{A_{e}}$ is the indicator variable of event
+  \begin{align*}
+    A_{e} = \{w \in \Omega \ | \ \text{$e$ is incident to only one vertex in $w$}\}   
+  \end{align*}
+  then $\mathbb{E}(X_{e}) = \mathbb{E}(1_{A_{e}}) = \mathbb{P}(A_{e})$. Let any edge $e$ in $G$ denoted by $e=(u,v)$, then $\mathbb{P}(A_{e})$ is calculated as follows
+  \begin{align*}
+    \mathbb{P}(A_{e}) &= \mathbb{P}(\{w \in \Omega \ | \ u \in w \text{ and } v \notin w\})  + \mathbb{P}(\{w \in \Omega \ | \ u \notin w \text{ and } v \in w\}) \\
+                      &= \left( \frac{1}{2} \times \frac{1}{2} \right) + \left( \frac{1}{2} \times \frac{1}{2} \right) \\
+                      &= \frac{1}{2}  
+  \end{align*}
+  Note that, $X = \sum_{e \in E(G)}$. By linearity of expectation, we have
+  \begin{align*}
+    \mathbb{E}(X) = \sum_{e \in E(G)} \mathbb{E}(X_{e}) = \sum_{e \in E(G)} \mathbb{P}(A_{e}) = \frac{|E|}{2}
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \mathbb{P}(X > \frac{|E|}{2}) > 0
+  \end{align*}
+  It is worth to note that, for any set of vertices $w \in \Omega$, then any set of edges in $G$, denoted by $E^{'}$, where each edge is incident to only one vertex in $w$ must form a bipartite graph $G^{'} \coloneqq (V,E^{'})$. That is, due to the inequality shown above, there is a subset $E^{'} \subseteq E$ such that $\#E^{'} \geq \#E/2$ and the subgraph $G^{'} \coloneqq (V,E^{'})$ is bipartite.
+\end{proof}
+
+\begin{problem}
+  Let $\langle \cdot, \cdot \rangle$ be the standard dot product on $\mathbb{R}^{n}$. Show probabilistically: For vectors $v_{1}, \ldots, v_{n} \in \mathbb{R}^{n}$ with length $\| v_{i} \| \coloneqq \sqrt{\langle v_{i}, v_{i} \rangle} = 1$ for $1 \leq i \leq n$, there are $\epsilon_{1}, \ldots, \epsilon_{n} \in \{\pm 1\}$ with
+  \begin{align*}
+    \| \epsilon_{1}v_{1} + \ldots + \epsilon_{n}v_{n} \| \leq \sqrt{n}
+  \end{align*}
+\end{problem}
+\begin{proof}
+  Let $(\Omega, \mathbb{P})$ be the discrete probability space where $\Omega$ is the set of all possible choices for $\epsilon_{1}, \ldots, \epsilon_{n}$ with the probability measure $\mathbb{P}(w) = \frac{1}{2^{n}}$ for any $w \in \Omega$. Let $X: \Omega \to \mathbb{R}$ be the random variable that assign a choice of $\epsilon_{1}, \ldots, \epsilon_{n}$ to $\| \epsilon_{1}v_{1} + \ldots + \epsilon_{n}v_{n} \| \leq \sqrt{n}$. That is, we have
+  \begin{align*}
+    \mathbb{E}(X) &= \mathbb{E}(\| \epsilon_{1}v_{1} + \ldots + \epsilon_{n}v_{n} \| \\
+                  &= \mathbb{E}(\sum_{i=1}^{n} \epsilon_{i}^{2} \|v_{i}\|^{2} + \sum_{1 \leq i < j \leq n} \epsilon_{i} \epsilon_{j} \langle v_{i}, v_{j} \rangle) 
+  \end{align*}
+  Since $\epsilon_{i}=\{\pm 1\}$ for $1 \leq i \leq n$, then $\epsilon_{i}^{2}=1$. The equation then becomes
+  \begin{align*}
+    \mathbb{E}(X) &= \mathbb{E}(\sum_{i=1}^{n} \|v_{i}\|^{2} + \sum_{1 \leq i < j \leq n} \epsilon_{i} \epsilon_{j} \langle v_{i}, v_{j} \rangle) \\
+                  &= \sum_{i=1}^{n} \|v_{i}\|^{2} + \mathbb{E}(\sum_{1 \leq i < j \leq n} \epsilon_{i} \epsilon_{j} \langle v_{i}, v_{j} \rangle) \\
+                  &= \sum_{i=1}^{n} \|v_{i}\|^{2} + \sum_{1 \leq i < j \leq n} \mathbb{E}(\epsilon_{i} \epsilon_{j} \langle v_{i}, v_{j} \rangle) \tag{3.1}
+  \end{align*}
+  We can observe from the equation that $\epsilon_{i}$ and $\epsilon_{j}$ are actually two random variables where $\epsilon_{i}$ and $\epsilon_{j}$ are two functions from $\Omega$ to $\{\pm 1\}$. Since $\langle v_{i}, v_{j} \rangle$ is a constant, the equation $(3.1)$ equivalent to
+  \begin{align*}
+    \mathbb{E}(X) = \sum_{i=1}^{n} \|v_{i}\|^{2} + \sum_{1 \leq i < j \leq n} \mathbb{E}(\epsilon_{i} \epsilon_{j}) \langle v_{i}, v_{j} \rangle \tag{3.2}
+  \end{align*}
+  It is obvious that $\epsilon_{i}$ and $\epsilon_{j}$ are independent from each other. Therefore, $\mathbb{E}(\epsilon_{i} \epsilon_{j}) = \mathbb{E}(\epsilon_{i})\mathbb{E}(\epsilon_{j})$. Consider $\mathbb{E}(\epsilon_{i})$, we have
+  \begin{align*}
+    \mathbb{E}(\epsilon_{i}) &= \sum_{w \in \Omega} |\epsilon_{i}(w)| \mathbb{P}(w)
+  \end{align*}
+  Recall that the image of the random variable is the set $\{\pm 1\}$. Therefore, the equation is actually equivalent to
+  \begin{align*}
+    \mathbb{E}(\epsilon_{i}) &= \sum_{w \in \Omega | \epsilon_{i}(w)=1} \mathbb{P}(w) - \sum_{w \in \Omega | \epsilon_{i}(w)=-1} \mathbb{P}(w) \\
+                             &= \mathbb{P}(\{w \in \Omega | \epsilon_{i}(w)=1\}) - \mathbb{P}(\{w \in \Omega | \epsilon_{i}(w)=-1\}) \\
+                             &= \frac{1}{2} - \frac{1}{2} \\
+                             &= 0
+  \end{align*}
+  Similarly, we have $\mathbb{E}(\epsilon_{j})=0$, and thus $\mathbb{E}(\epsilon_{i} \epsilon_{j})=0$. Therefore, the equation $(3.2)$ is equivalent to
+  \begin{align*}
+    \mathbb{E}(X) = \sum_{i=1}^{n} \| v_{i} \|^{2}
+  \end{align*}
+  Recall that $\| v_{i} \|^{2} = 1$ for $1 \leq i \leq n$, thus $\mathbb{E}(X)=n$. This implies that $P(X < n) > 0$, which means that there exists choices of $\epsilon_{1}, \ldots, \epsilon_{n} \in \{\pm 1\}$ such that
+  \begin{align*}
+  \| \epsilon_{1}v_{1} + \ldots + \epsilon_{n}v_{n} \|^{2} \leq n \Leftrightarrow \| \epsilon_{1}v_{1} + \ldots + \epsilon_{n}v_{n} \| \leq \sqrt{n}  \end{align*}
+  and the proof is finished.
+\end{proof}
+
+\begin{problem}
+  Let $(\Omega, \mathbb{P})$ be a discrete probability space and let $T, X_{0}, X_{1}, \ldots$ be real valued random variables on $(\Omega, \mathbb{P})$ such that:
+  \begin{itemize}
+    \item All expected values exist
+    \item The random variables are independent
+    \item The random variables $X_{0}, X_{1}, \ldots$ are identically distributed
+    \item $T(\omega) \in \mathbb{N}$ for all $\omega \in \Omega$
+  \end{itemize}
+  Prove that:
+  \begin{enumerate}[label=(\roman*)]  
+  \item Let $T_{n}, n \in \mathbb{N}$ be the indicator random variable of the event $\omega \in \Omega | T(\omega) = n\}$ and $S_{n} \coloneqq X_{1} + \ldots + X_{n}$. Then $T_{n}$ and $S_{n}$ are independent
+  \item Define the random variable
+    \begin{align*}
+      S_{T} &: \Omega \to \mathbb{R} \\
+            &: \omega \mapsto \sum_{i=0}^{T(w)} X_{i}(w).
+    \end{align*}
+    Show that $S_{T} = \sum_{n \in \mathbb{N}} S_{n} \cdot T_{n}$
+  \item $\mathbb{E}[S_{T}]$ exists and $\mathbb{E}[S_{T}] = \mathbb{E}[T] \mathbb{E}[X_{1}]$
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  We are going to prove the statements one after another
+  \begin{enumerate}[label=(\roman*)]
+    \item In order to prove that $T_{n}$ and $S_{n}$ are independent, we want to show that
+      \begin{align*}
+        \mathbb{P}(T_{n}=a, S_{n}=b) = \mathbb{P}(T_{n}=a) \mathbb{P}(S_{n}=b) \tag{4.1}
+      \end{align*}
+      We firstly consider the case where $T_{n}=1$, we have
+      \begin{align*}
+        \mathbb{P}(T_{n}=1, S_{n}=b) &= \mathbb{P}(\{w \in \Omega | T(w) = n \text{ and } S_{n}(w) = b\}) \\
+                                     &= \mathbb{P}(\{w \in \Omega | T(w) = n\} \cap \{w \in \Omega | S_{n}(w) = b\}) \\
+                                     &= \mathbb{P}(\{w \in \Omega | T(w) = n\} \cap (\bigcup_{x_{1} + x_{2} + \ldots + x_{n}=b} \bigcap_{i=1}^{n} \{w \in \Omega|X_{i} = x_{i}\})
+      \end{align*}
+      By the distributive property of intersection over union, we have
+      \begin{align*}
+        \mathbb{P}(T_{n}=1, S_{n}=b) &= \mathbb{P}(\bigcup_{x_{1} + x_{2} + \ldots + x_{n} = b} (\{w \in \Omega|T(w) = n\} \cap \bigcap_{i=1}^{n} \{w \in \Omega|X_{i}=x_{i}\})) \\
+                                     &= \sum_{x_{1} + x_{2} + \ldots + x_{n} = b} \mathbb{P}(\{w \in \Omega|T(w) = n\} \cap \bigcap_{i=1}^{n} \{w \in \Omega|X_{i}=x_{i}\}) \\
+      \end{align*}
+      Since $T, X_{0}, X_{1}, \ldots$ are independent, we have
+      \begin{align*}
+        \mathbb{P}(T_{n}=1, S_{n}=b) &= \sum_{x_{1} + x_{2} + \ldots + x_{n} = b} \mathbb{P}(\{w \in \Omega|T(w) = n\}) \prod_{i=1}^{n} \mathbb{P}(\{w \in \Omega|X_{i}=x_{i}\}) \\
+                                     &= \mathbb{P}(\{w \in \Omega|T(w) = n\}) \sum_{x_{1} + x_{2} + \ldots + x_{n} = b} \prod_{i=1}^{n} \mathbb{P}(\{w \in \Omega|X_{i}=x_{i}\}) \\
+                                     &= \mathbb{P}(\{w \in \Omega|T(w) = n\}) \mathbb{P}(\{w \in \Omega|S_{n}(w) = b\}) \\
+                                     &= \mathbb{P}(T_{n}=1) \mathbb{P}(S_{n}=b)
+      \end{align*}
+      The same thing can be shown for $T_{n}=0$ in the similar way. Therefore, the equation $(4.1)$ is satisfied, and thus $T_{n}$ and $S_{n}$ are independent. 
+    \item For any $\omega \in \Omega$, let $n = T(w)$. Then $S_{T}(w) = \sum_{i=0}^{n}X_{i}(w) = S_{n}(w)$. Furthermore, for any $w \in \Omega$, then $T(w)$ is unknown. That is, for any $w \in \Omega$, we want to try out all $S_{n}(w)$ for $n \in \mathbb{N}$ and only take the one where $T(w)=n$, or $T_{n}(w)=1$. Additionally, $T_{n}(w)=0$ when $T(w) \neq n$, and thus $S_{T}(w)$ can be expressed as $S_{T}(w) = \sum_{n \in \mathbb{N}} S_{n}(w) T_{n}(w)$ for any $w \in \Omega$. Therefore,
+      \begin{align*}
+        S_{T} = \sum_{n \in \mathbb{N}} S_{n} T_{n}
+      \end{align*}
+    \item  We have
+      \begin{align*}
+        \mathbb{E}(S_{T}) &= \mathbb{E}(\sum_{n \in \mathbb{N}} S_{n} T_{n}) \\
+                          &= \sum_{n \in \mathbb{N}} \mathbb{E}(S_{n}) \mathbb{E}(T_{n}) \\
+                          &= \sum_{n \in \mathbb{N}} \mathbb{E}(X_{1} + X_{2} + \ldots + X_{n}) \mathbb{E}(T_{n}) \\
+                          &= \sum_{n \in \mathbb{N}} [\mathbb{E}(X_{1}) + \mathbb{E}(X_{2}) + \ldots + \mathbb{E}(X_{n})] \mathbb{E}(T_{n}) \\
+                          &= \sum_{n \in \mathbb{N}} n \mathbb{E}(X_{1}) \mathbb{E}(T_{n}) \\
+                          &= \mathbb{E}(X_{1}) \sum_{n \in \mathbb{N}} n \mathbb{P}(T=n) \\
+                          &= \mathbb{E}(X_{1}) \mathbb{E}(T)
+      \end{align*}
+  \end{enumerate}
+  and the proofs for the statements are finished.
+\end{proof}
